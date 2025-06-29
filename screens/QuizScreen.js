@@ -50,10 +50,10 @@ export default function QuizScreen({ route, navigation }) {
         useNativeDriver: false,
       }).start();
     }
-  }, [currentCardIndex, shuffledCards.length]);
+  }, [currentCardIndex, shuffledCards.length, progressAnimation]);
 
   // Generate multiple choice options for current question
-  const generateAnswerOptions = (currentCard, allCards) => {
+  const generateAnswerOptions = React.useCallback((currentCard, allCards) => {
     if (mode !== 'quiz') return [];
 
     const wrongAnswers = allCards
@@ -71,7 +71,7 @@ export default function QuizScreen({ route, navigation }) {
       }));
 
     return options;
-  };
+  }, [mode]);
 
   // Reset question state when card changes
   useEffect(() => {
@@ -84,7 +84,7 @@ export default function QuizScreen({ route, navigation }) {
       const options = generateAnswerOptions(shuffledCards[currentCardIndex], shuffledCards);
       setAnswerOptions(options);
     }
-  }, [currentCardIndex, shuffledCards, mode]);
+  }, [currentCardIndex, shuffledCards, mode, generateAnswerOptions]);
 
   // Animate card flip when showing answer in quiz mode
   useEffect(() => {
@@ -95,7 +95,7 @@ export default function QuizScreen({ route, navigation }) {
         useNativeDriver: true,
       }).start();
     }
-  }, [showingAnswer, mode]);
+  }, [showingAnswer, mode, flipAnimation]);
 
   const flipCard = () => {
     if (mode === 'flashcard') {
