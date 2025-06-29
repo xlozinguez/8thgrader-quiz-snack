@@ -1,0 +1,1963 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for 8thgrader-quiz-snack/data/flashcards.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">8thgrader-quiz-snack/data</a> flashcards.js</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>1/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/0</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/0</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>1/1</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a>
+<a name='L155'></a><a href='#L155'>155</a>
+<a name='L156'></a><a href='#L156'>156</a>
+<a name='L157'></a><a href='#L157'>157</a>
+<a name='L158'></a><a href='#L158'>158</a>
+<a name='L159'></a><a href='#L159'>159</a>
+<a name='L160'></a><a href='#L160'>160</a>
+<a name='L161'></a><a href='#L161'>161</a>
+<a name='L162'></a><a href='#L162'>162</a>
+<a name='L163'></a><a href='#L163'>163</a>
+<a name='L164'></a><a href='#L164'>164</a>
+<a name='L165'></a><a href='#L165'>165</a>
+<a name='L166'></a><a href='#L166'>166</a>
+<a name='L167'></a><a href='#L167'>167</a>
+<a name='L168'></a><a href='#L168'>168</a>
+<a name='L169'></a><a href='#L169'>169</a>
+<a name='L170'></a><a href='#L170'>170</a>
+<a name='L171'></a><a href='#L171'>171</a>
+<a name='L172'></a><a href='#L172'>172</a>
+<a name='L173'></a><a href='#L173'>173</a>
+<a name='L174'></a><a href='#L174'>174</a>
+<a name='L175'></a><a href='#L175'>175</a>
+<a name='L176'></a><a href='#L176'>176</a>
+<a name='L177'></a><a href='#L177'>177</a>
+<a name='L178'></a><a href='#L178'>178</a>
+<a name='L179'></a><a href='#L179'>179</a>
+<a name='L180'></a><a href='#L180'>180</a>
+<a name='L181'></a><a href='#L181'>181</a>
+<a name='L182'></a><a href='#L182'>182</a>
+<a name='L183'></a><a href='#L183'>183</a>
+<a name='L184'></a><a href='#L184'>184</a>
+<a name='L185'></a><a href='#L185'>185</a>
+<a name='L186'></a><a href='#L186'>186</a>
+<a name='L187'></a><a href='#L187'>187</a>
+<a name='L188'></a><a href='#L188'>188</a>
+<a name='L189'></a><a href='#L189'>189</a>
+<a name='L190'></a><a href='#L190'>190</a>
+<a name='L191'></a><a href='#L191'>191</a>
+<a name='L192'></a><a href='#L192'>192</a>
+<a name='L193'></a><a href='#L193'>193</a>
+<a name='L194'></a><a href='#L194'>194</a>
+<a name='L195'></a><a href='#L195'>195</a>
+<a name='L196'></a><a href='#L196'>196</a>
+<a name='L197'></a><a href='#L197'>197</a>
+<a name='L198'></a><a href='#L198'>198</a>
+<a name='L199'></a><a href='#L199'>199</a>
+<a name='L200'></a><a href='#L200'>200</a>
+<a name='L201'></a><a href='#L201'>201</a>
+<a name='L202'></a><a href='#L202'>202</a>
+<a name='L203'></a><a href='#L203'>203</a>
+<a name='L204'></a><a href='#L204'>204</a>
+<a name='L205'></a><a href='#L205'>205</a>
+<a name='L206'></a><a href='#L206'>206</a>
+<a name='L207'></a><a href='#L207'>207</a>
+<a name='L208'></a><a href='#L208'>208</a>
+<a name='L209'></a><a href='#L209'>209</a>
+<a name='L210'></a><a href='#L210'>210</a>
+<a name='L211'></a><a href='#L211'>211</a>
+<a name='L212'></a><a href='#L212'>212</a>
+<a name='L213'></a><a href='#L213'>213</a>
+<a name='L214'></a><a href='#L214'>214</a>
+<a name='L215'></a><a href='#L215'>215</a>
+<a name='L216'></a><a href='#L216'>216</a>
+<a name='L217'></a><a href='#L217'>217</a>
+<a name='L218'></a><a href='#L218'>218</a>
+<a name='L219'></a><a href='#L219'>219</a>
+<a name='L220'></a><a href='#L220'>220</a>
+<a name='L221'></a><a href='#L221'>221</a>
+<a name='L222'></a><a href='#L222'>222</a>
+<a name='L223'></a><a href='#L223'>223</a>
+<a name='L224'></a><a href='#L224'>224</a>
+<a name='L225'></a><a href='#L225'>225</a>
+<a name='L226'></a><a href='#L226'>226</a>
+<a name='L227'></a><a href='#L227'>227</a>
+<a name='L228'></a><a href='#L228'>228</a>
+<a name='L229'></a><a href='#L229'>229</a>
+<a name='L230'></a><a href='#L230'>230</a>
+<a name='L231'></a><a href='#L231'>231</a>
+<a name='L232'></a><a href='#L232'>232</a>
+<a name='L233'></a><a href='#L233'>233</a>
+<a name='L234'></a><a href='#L234'>234</a>
+<a name='L235'></a><a href='#L235'>235</a>
+<a name='L236'></a><a href='#L236'>236</a>
+<a name='L237'></a><a href='#L237'>237</a>
+<a name='L238'></a><a href='#L238'>238</a>
+<a name='L239'></a><a href='#L239'>239</a>
+<a name='L240'></a><a href='#L240'>240</a>
+<a name='L241'></a><a href='#L241'>241</a>
+<a name='L242'></a><a href='#L242'>242</a>
+<a name='L243'></a><a href='#L243'>243</a>
+<a name='L244'></a><a href='#L244'>244</a>
+<a name='L245'></a><a href='#L245'>245</a>
+<a name='L246'></a><a href='#L246'>246</a>
+<a name='L247'></a><a href='#L247'>247</a>
+<a name='L248'></a><a href='#L248'>248</a>
+<a name='L249'></a><a href='#L249'>249</a>
+<a name='L250'></a><a href='#L250'>250</a>
+<a name='L251'></a><a href='#L251'>251</a>
+<a name='L252'></a><a href='#L252'>252</a>
+<a name='L253'></a><a href='#L253'>253</a>
+<a name='L254'></a><a href='#L254'>254</a>
+<a name='L255'></a><a href='#L255'>255</a>
+<a name='L256'></a><a href='#L256'>256</a>
+<a name='L257'></a><a href='#L257'>257</a>
+<a name='L258'></a><a href='#L258'>258</a>
+<a name='L259'></a><a href='#L259'>259</a>
+<a name='L260'></a><a href='#L260'>260</a>
+<a name='L261'></a><a href='#L261'>261</a>
+<a name='L262'></a><a href='#L262'>262</a>
+<a name='L263'></a><a href='#L263'>263</a>
+<a name='L264'></a><a href='#L264'>264</a>
+<a name='L265'></a><a href='#L265'>265</a>
+<a name='L266'></a><a href='#L266'>266</a>
+<a name='L267'></a><a href='#L267'>267</a>
+<a name='L268'></a><a href='#L268'>268</a>
+<a name='L269'></a><a href='#L269'>269</a>
+<a name='L270'></a><a href='#L270'>270</a>
+<a name='L271'></a><a href='#L271'>271</a>
+<a name='L272'></a><a href='#L272'>272</a>
+<a name='L273'></a><a href='#L273'>273</a>
+<a name='L274'></a><a href='#L274'>274</a>
+<a name='L275'></a><a href='#L275'>275</a>
+<a name='L276'></a><a href='#L276'>276</a>
+<a name='L277'></a><a href='#L277'>277</a>
+<a name='L278'></a><a href='#L278'>278</a>
+<a name='L279'></a><a href='#L279'>279</a>
+<a name='L280'></a><a href='#L280'>280</a>
+<a name='L281'></a><a href='#L281'>281</a>
+<a name='L282'></a><a href='#L282'>282</a>
+<a name='L283'></a><a href='#L283'>283</a>
+<a name='L284'></a><a href='#L284'>284</a>
+<a name='L285'></a><a href='#L285'>285</a>
+<a name='L286'></a><a href='#L286'>286</a>
+<a name='L287'></a><a href='#L287'>287</a>
+<a name='L288'></a><a href='#L288'>288</a>
+<a name='L289'></a><a href='#L289'>289</a>
+<a name='L290'></a><a href='#L290'>290</a>
+<a name='L291'></a><a href='#L291'>291</a>
+<a name='L292'></a><a href='#L292'>292</a>
+<a name='L293'></a><a href='#L293'>293</a>
+<a name='L294'></a><a href='#L294'>294</a>
+<a name='L295'></a><a href='#L295'>295</a>
+<a name='L296'></a><a href='#L296'>296</a>
+<a name='L297'></a><a href='#L297'>297</a>
+<a name='L298'></a><a href='#L298'>298</a>
+<a name='L299'></a><a href='#L299'>299</a>
+<a name='L300'></a><a href='#L300'>300</a>
+<a name='L301'></a><a href='#L301'>301</a>
+<a name='L302'></a><a href='#L302'>302</a>
+<a name='L303'></a><a href='#L303'>303</a>
+<a name='L304'></a><a href='#L304'>304</a>
+<a name='L305'></a><a href='#L305'>305</a>
+<a name='L306'></a><a href='#L306'>306</a>
+<a name='L307'></a><a href='#L307'>307</a>
+<a name='L308'></a><a href='#L308'>308</a>
+<a name='L309'></a><a href='#L309'>309</a>
+<a name='L310'></a><a href='#L310'>310</a>
+<a name='L311'></a><a href='#L311'>311</a>
+<a name='L312'></a><a href='#L312'>312</a>
+<a name='L313'></a><a href='#L313'>313</a>
+<a name='L314'></a><a href='#L314'>314</a>
+<a name='L315'></a><a href='#L315'>315</a>
+<a name='L316'></a><a href='#L316'>316</a>
+<a name='L317'></a><a href='#L317'>317</a>
+<a name='L318'></a><a href='#L318'>318</a>
+<a name='L319'></a><a href='#L319'>319</a>
+<a name='L320'></a><a href='#L320'>320</a>
+<a name='L321'></a><a href='#L321'>321</a>
+<a name='L322'></a><a href='#L322'>322</a>
+<a name='L323'></a><a href='#L323'>323</a>
+<a name='L324'></a><a href='#L324'>324</a>
+<a name='L325'></a><a href='#L325'>325</a>
+<a name='L326'></a><a href='#L326'>326</a>
+<a name='L327'></a><a href='#L327'>327</a>
+<a name='L328'></a><a href='#L328'>328</a>
+<a name='L329'></a><a href='#L329'>329</a>
+<a name='L330'></a><a href='#L330'>330</a>
+<a name='L331'></a><a href='#L331'>331</a>
+<a name='L332'></a><a href='#L332'>332</a>
+<a name='L333'></a><a href='#L333'>333</a>
+<a name='L334'></a><a href='#L334'>334</a>
+<a name='L335'></a><a href='#L335'>335</a>
+<a name='L336'></a><a href='#L336'>336</a>
+<a name='L337'></a><a href='#L337'>337</a>
+<a name='L338'></a><a href='#L338'>338</a>
+<a name='L339'></a><a href='#L339'>339</a>
+<a name='L340'></a><a href='#L340'>340</a>
+<a name='L341'></a><a href='#L341'>341</a>
+<a name='L342'></a><a href='#L342'>342</a>
+<a name='L343'></a><a href='#L343'>343</a>
+<a name='L344'></a><a href='#L344'>344</a>
+<a name='L345'></a><a href='#L345'>345</a>
+<a name='L346'></a><a href='#L346'>346</a>
+<a name='L347'></a><a href='#L347'>347</a>
+<a name='L348'></a><a href='#L348'>348</a>
+<a name='L349'></a><a href='#L349'>349</a>
+<a name='L350'></a><a href='#L350'>350</a>
+<a name='L351'></a><a href='#L351'>351</a>
+<a name='L352'></a><a href='#L352'>352</a>
+<a name='L353'></a><a href='#L353'>353</a>
+<a name='L354'></a><a href='#L354'>354</a>
+<a name='L355'></a><a href='#L355'>355</a>
+<a name='L356'></a><a href='#L356'>356</a>
+<a name='L357'></a><a href='#L357'>357</a>
+<a name='L358'></a><a href='#L358'>358</a>
+<a name='L359'></a><a href='#L359'>359</a>
+<a name='L360'></a><a href='#L360'>360</a>
+<a name='L361'></a><a href='#L361'>361</a>
+<a name='L362'></a><a href='#L362'>362</a>
+<a name='L363'></a><a href='#L363'>363</a>
+<a name='L364'></a><a href='#L364'>364</a>
+<a name='L365'></a><a href='#L365'>365</a>
+<a name='L366'></a><a href='#L366'>366</a>
+<a name='L367'></a><a href='#L367'>367</a>
+<a name='L368'></a><a href='#L368'>368</a>
+<a name='L369'></a><a href='#L369'>369</a>
+<a name='L370'></a><a href='#L370'>370</a>
+<a name='L371'></a><a href='#L371'>371</a>
+<a name='L372'></a><a href='#L372'>372</a>
+<a name='L373'></a><a href='#L373'>373</a>
+<a name='L374'></a><a href='#L374'>374</a>
+<a name='L375'></a><a href='#L375'>375</a>
+<a name='L376'></a><a href='#L376'>376</a>
+<a name='L377'></a><a href='#L377'>377</a>
+<a name='L378'></a><a href='#L378'>378</a>
+<a name='L379'></a><a href='#L379'>379</a>
+<a name='L380'></a><a href='#L380'>380</a>
+<a name='L381'></a><a href='#L381'>381</a>
+<a name='L382'></a><a href='#L382'>382</a>
+<a name='L383'></a><a href='#L383'>383</a>
+<a name='L384'></a><a href='#L384'>384</a>
+<a name='L385'></a><a href='#L385'>385</a>
+<a name='L386'></a><a href='#L386'>386</a>
+<a name='L387'></a><a href='#L387'>387</a>
+<a name='L388'></a><a href='#L388'>388</a>
+<a name='L389'></a><a href='#L389'>389</a>
+<a name='L390'></a><a href='#L390'>390</a>
+<a name='L391'></a><a href='#L391'>391</a>
+<a name='L392'></a><a href='#L392'>392</a>
+<a name='L393'></a><a href='#L393'>393</a>
+<a name='L394'></a><a href='#L394'>394</a>
+<a name='L395'></a><a href='#L395'>395</a>
+<a name='L396'></a><a href='#L396'>396</a>
+<a name='L397'></a><a href='#L397'>397</a>
+<a name='L398'></a><a href='#L398'>398</a>
+<a name='L399'></a><a href='#L399'>399</a>
+<a name='L400'></a><a href='#L400'>400</a>
+<a name='L401'></a><a href='#L401'>401</a>
+<a name='L402'></a><a href='#L402'>402</a>
+<a name='L403'></a><a href='#L403'>403</a>
+<a name='L404'></a><a href='#L404'>404</a>
+<a name='L405'></a><a href='#L405'>405</a>
+<a name='L406'></a><a href='#L406'>406</a>
+<a name='L407'></a><a href='#L407'>407</a>
+<a name='L408'></a><a href='#L408'>408</a>
+<a name='L409'></a><a href='#L409'>409</a>
+<a name='L410'></a><a href='#L410'>410</a>
+<a name='L411'></a><a href='#L411'>411</a>
+<a name='L412'></a><a href='#L412'>412</a>
+<a name='L413'></a><a href='#L413'>413</a>
+<a name='L414'></a><a href='#L414'>414</a>
+<a name='L415'></a><a href='#L415'>415</a>
+<a name='L416'></a><a href='#L416'>416</a>
+<a name='L417'></a><a href='#L417'>417</a>
+<a name='L418'></a><a href='#L418'>418</a>
+<a name='L419'></a><a href='#L419'>419</a>
+<a name='L420'></a><a href='#L420'>420</a>
+<a name='L421'></a><a href='#L421'>421</a>
+<a name='L422'></a><a href='#L422'>422</a>
+<a name='L423'></a><a href='#L423'>423</a>
+<a name='L424'></a><a href='#L424'>424</a>
+<a name='L425'></a><a href='#L425'>425</a>
+<a name='L426'></a><a href='#L426'>426</a>
+<a name='L427'></a><a href='#L427'>427</a>
+<a name='L428'></a><a href='#L428'>428</a>
+<a name='L429'></a><a href='#L429'>429</a>
+<a name='L430'></a><a href='#L430'>430</a>
+<a name='L431'></a><a href='#L431'>431</a>
+<a name='L432'></a><a href='#L432'>432</a>
+<a name='L433'></a><a href='#L433'>433</a>
+<a name='L434'></a><a href='#L434'>434</a>
+<a name='L435'></a><a href='#L435'>435</a>
+<a name='L436'></a><a href='#L436'>436</a>
+<a name='L437'></a><a href='#L437'>437</a>
+<a name='L438'></a><a href='#L438'>438</a>
+<a name='L439'></a><a href='#L439'>439</a>
+<a name='L440'></a><a href='#L440'>440</a>
+<a name='L441'></a><a href='#L441'>441</a>
+<a name='L442'></a><a href='#L442'>442</a>
+<a name='L443'></a><a href='#L443'>443</a>
+<a name='L444'></a><a href='#L444'>444</a>
+<a name='L445'></a><a href='#L445'>445</a>
+<a name='L446'></a><a href='#L446'>446</a>
+<a name='L447'></a><a href='#L447'>447</a>
+<a name='L448'></a><a href='#L448'>448</a>
+<a name='L449'></a><a href='#L449'>449</a>
+<a name='L450'></a><a href='#L450'>450</a>
+<a name='L451'></a><a href='#L451'>451</a>
+<a name='L452'></a><a href='#L452'>452</a>
+<a name='L453'></a><a href='#L453'>453</a>
+<a name='L454'></a><a href='#L454'>454</a>
+<a name='L455'></a><a href='#L455'>455</a>
+<a name='L456'></a><a href='#L456'>456</a>
+<a name='L457'></a><a href='#L457'>457</a>
+<a name='L458'></a><a href='#L458'>458</a>
+<a name='L459'></a><a href='#L459'>459</a>
+<a name='L460'></a><a href='#L460'>460</a>
+<a name='L461'></a><a href='#L461'>461</a>
+<a name='L462'></a><a href='#L462'>462</a>
+<a name='L463'></a><a href='#L463'>463</a>
+<a name='L464'></a><a href='#L464'>464</a>
+<a name='L465'></a><a href='#L465'>465</a>
+<a name='L466'></a><a href='#L466'>466</a>
+<a name='L467'></a><a href='#L467'>467</a>
+<a name='L468'></a><a href='#L468'>468</a>
+<a name='L469'></a><a href='#L469'>469</a>
+<a name='L470'></a><a href='#L470'>470</a>
+<a name='L471'></a><a href='#L471'>471</a>
+<a name='L472'></a><a href='#L472'>472</a>
+<a name='L473'></a><a href='#L473'>473</a>
+<a name='L474'></a><a href='#L474'>474</a>
+<a name='L475'></a><a href='#L475'>475</a>
+<a name='L476'></a><a href='#L476'>476</a>
+<a name='L477'></a><a href='#L477'>477</a>
+<a name='L478'></a><a href='#L478'>478</a>
+<a name='L479'></a><a href='#L479'>479</a>
+<a name='L480'></a><a href='#L480'>480</a>
+<a name='L481'></a><a href='#L481'>481</a>
+<a name='L482'></a><a href='#L482'>482</a>
+<a name='L483'></a><a href='#L483'>483</a>
+<a name='L484'></a><a href='#L484'>484</a>
+<a name='L485'></a><a href='#L485'>485</a>
+<a name='L486'></a><a href='#L486'>486</a>
+<a name='L487'></a><a href='#L487'>487</a>
+<a name='L488'></a><a href='#L488'>488</a>
+<a name='L489'></a><a href='#L489'>489</a>
+<a name='L490'></a><a href='#L490'>490</a>
+<a name='L491'></a><a href='#L491'>491</a>
+<a name='L492'></a><a href='#L492'>492</a>
+<a name='L493'></a><a href='#L493'>493</a>
+<a name='L494'></a><a href='#L494'>494</a>
+<a name='L495'></a><a href='#L495'>495</a>
+<a name='L496'></a><a href='#L496'>496</a>
+<a name='L497'></a><a href='#L497'>497</a>
+<a name='L498'></a><a href='#L498'>498</a>
+<a name='L499'></a><a href='#L499'>499</a>
+<a name='L500'></a><a href='#L500'>500</a>
+<a name='L501'></a><a href='#L501'>501</a>
+<a name='L502'></a><a href='#L502'>502</a>
+<a name='L503'></a><a href='#L503'>503</a>
+<a name='L504'></a><a href='#L504'>504</a>
+<a name='L505'></a><a href='#L505'>505</a>
+<a name='L506'></a><a href='#L506'>506</a>
+<a name='L507'></a><a href='#L507'>507</a>
+<a name='L508'></a><a href='#L508'>508</a>
+<a name='L509'></a><a href='#L509'>509</a>
+<a name='L510'></a><a href='#L510'>510</a>
+<a name='L511'></a><a href='#L511'>511</a>
+<a name='L512'></a><a href='#L512'>512</a>
+<a name='L513'></a><a href='#L513'>513</a>
+<a name='L514'></a><a href='#L514'>514</a>
+<a name='L515'></a><a href='#L515'>515</a>
+<a name='L516'></a><a href='#L516'>516</a>
+<a name='L517'></a><a href='#L517'>517</a>
+<a name='L518'></a><a href='#L518'>518</a>
+<a name='L519'></a><a href='#L519'>519</a>
+<a name='L520'></a><a href='#L520'>520</a>
+<a name='L521'></a><a href='#L521'>521</a>
+<a name='L522'></a><a href='#L522'>522</a>
+<a name='L523'></a><a href='#L523'>523</a>
+<a name='L524'></a><a href='#L524'>524</a>
+<a name='L525'></a><a href='#L525'>525</a>
+<a name='L526'></a><a href='#L526'>526</a>
+<a name='L527'></a><a href='#L527'>527</a>
+<a name='L528'></a><a href='#L528'>528</a>
+<a name='L529'></a><a href='#L529'>529</a>
+<a name='L530'></a><a href='#L530'>530</a>
+<a name='L531'></a><a href='#L531'>531</a>
+<a name='L532'></a><a href='#L532'>532</a>
+<a name='L533'></a><a href='#L533'>533</a>
+<a name='L534'></a><a href='#L534'>534</a>
+<a name='L535'></a><a href='#L535'>535</a>
+<a name='L536'></a><a href='#L536'>536</a>
+<a name='L537'></a><a href='#L537'>537</a>
+<a name='L538'></a><a href='#L538'>538</a>
+<a name='L539'></a><a href='#L539'>539</a>
+<a name='L540'></a><a href='#L540'>540</a>
+<a name='L541'></a><a href='#L541'>541</a>
+<a name='L542'></a><a href='#L542'>542</a>
+<a name='L543'></a><a href='#L543'>543</a>
+<a name='L544'></a><a href='#L544'>544</a>
+<a name='L545'></a><a href='#L545'>545</a>
+<a name='L546'></a><a href='#L546'>546</a>
+<a name='L547'></a><a href='#L547'>547</a>
+<a name='L548'></a><a href='#L548'>548</a>
+<a name='L549'></a><a href='#L549'>549</a>
+<a name='L550'></a><a href='#L550'>550</a>
+<a name='L551'></a><a href='#L551'>551</a>
+<a name='L552'></a><a href='#L552'>552</a>
+<a name='L553'></a><a href='#L553'>553</a>
+<a name='L554'></a><a href='#L554'>554</a>
+<a name='L555'></a><a href='#L555'>555</a>
+<a name='L556'></a><a href='#L556'>556</a>
+<a name='L557'></a><a href='#L557'>557</a>
+<a name='L558'></a><a href='#L558'>558</a>
+<a name='L559'></a><a href='#L559'>559</a>
+<a name='L560'></a><a href='#L560'>560</a>
+<a name='L561'></a><a href='#L561'>561</a>
+<a name='L562'></a><a href='#L562'>562</a>
+<a name='L563'></a><a href='#L563'>563</a>
+<a name='L564'></a><a href='#L564'>564</a>
+<a name='L565'></a><a href='#L565'>565</a>
+<a name='L566'></a><a href='#L566'>566</a>
+<a name='L567'></a><a href='#L567'>567</a>
+<a name='L568'></a><a href='#L568'>568</a>
+<a name='L569'></a><a href='#L569'>569</a>
+<a name='L570'></a><a href='#L570'>570</a>
+<a name='L571'></a><a href='#L571'>571</a>
+<a name='L572'></a><a href='#L572'>572</a>
+<a name='L573'></a><a href='#L573'>573</a>
+<a name='L574'></a><a href='#L574'>574</a>
+<a name='L575'></a><a href='#L575'>575</a>
+<a name='L576'></a><a href='#L576'>576</a>
+<a name='L577'></a><a href='#L577'>577</a>
+<a name='L578'></a><a href='#L578'>578</a>
+<a name='L579'></a><a href='#L579'>579</a>
+<a name='L580'></a><a href='#L580'>580</a>
+<a name='L581'></a><a href='#L581'>581</a>
+<a name='L582'></a><a href='#L582'>582</a>
+<a name='L583'></a><a href='#L583'>583</a>
+<a name='L584'></a><a href='#L584'>584</a>
+<a name='L585'></a><a href='#L585'>585</a>
+<a name='L586'></a><a href='#L586'>586</a>
+<a name='L587'></a><a href='#L587'>587</a>
+<a name='L588'></a><a href='#L588'>588</a>
+<a name='L589'></a><a href='#L589'>589</a>
+<a name='L590'></a><a href='#L590'>590</a>
+<a name='L591'></a><a href='#L591'>591</a>
+<a name='L592'></a><a href='#L592'>592</a>
+<a name='L593'></a><a href='#L593'>593</a>
+<a name='L594'></a><a href='#L594'>594</a>
+<a name='L595'></a><a href='#L595'>595</a>
+<a name='L596'></a><a href='#L596'>596</a>
+<a name='L597'></a><a href='#L597'>597</a>
+<a name='L598'></a><a href='#L598'>598</a>
+<a name='L599'></a><a href='#L599'>599</a>
+<a name='L600'></a><a href='#L600'>600</a>
+<a name='L601'></a><a href='#L601'>601</a>
+<a name='L602'></a><a href='#L602'>602</a>
+<a name='L603'></a><a href='#L603'>603</a>
+<a name='L604'></a><a href='#L604'>604</a>
+<a name='L605'></a><a href='#L605'>605</a>
+<a name='L606'></a><a href='#L606'>606</a>
+<a name='L607'></a><a href='#L607'>607</a>
+<a name='L608'></a><a href='#L608'>608</a>
+<a name='L609'></a><a href='#L609'>609</a>
+<a name='L610'></a><a href='#L610'>610</a>
+<a name='L611'></a><a href='#L611'>611</a>
+<a name='L612'></a><a href='#L612'>612</a>
+<a name='L613'></a><a href='#L613'>613</a>
+<a name='L614'></a><a href='#L614'>614</a>
+<a name='L615'></a><a href='#L615'>615</a>
+<a name='L616'></a><a href='#L616'>616</a>
+<a name='L617'></a><a href='#L617'>617</a>
+<a name='L618'></a><a href='#L618'>618</a>
+<a name='L619'></a><a href='#L619'>619</a>
+<a name='L620'></a><a href='#L620'>620</a>
+<a name='L621'></a><a href='#L621'>621</a>
+<a name='L622'></a><a href='#L622'>622</a>
+<a name='L623'></a><a href='#L623'>623</a>
+<a name='L624'></a><a href='#L624'>624</a>
+<a name='L625'></a><a href='#L625'>625</a>
+<a name='L626'></a><a href='#L626'>626</a>
+<a name='L627'></a><a href='#L627'>627</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export const flashcardsData = {
+  civics: {
+    name: "Civics",
+    color: "#2c3e50",
+    icon: "🏛️",
+    units: [
+      {
+        id: 1,
+        name: "Duties and Responsibilities of American Citizenship",
+        cards: [
+          { id: "1A", question: "What are the three main duties of American citizens?", answer: "Obey laws, pay taxes, and serve on juries when called" },
+          { id: "1B", question: "What is civic responsibility?", answer: "The voluntary actions citizens take to help their community and country, like voting and volunteering" },
+          { id: "1C", question: "Why is voting considered both a right and a responsibility?", answer: "It's a right because citizens can choose to vote, but it's a responsibility because democracy depends on citizen participation" },
+          { id: "1D", question: "What age must you be to vote in federal elections?", answer: "18 years old" },
+          { id: "1E", question: "What is jury duty and why is it important?", answer: "Citizens serve as jurors in court cases to ensure fair trials and justice for all" },
+          { id: "1F", question: "Name three ways citizens can participate in their community.", answer: "Volunteering, attending town meetings, joining community organizations, helping neighbors" },
+          { id: "1G", question: "What does it mean to be a \"good citizen\"?", answer: "Following laws, respecting others' rights, participating in civic life, and contributing to the common good" },
+          { id: "1H", question: "Why do citizens have to pay taxes?", answer: "To fund government services like schools, roads, police, military, and social programs" },
+          { id: "1I", question: "What is the difference between a citizen and a non-citizen?", answer: "Citizens have full political rights (like voting) and responsibilities, while non-citizens have limited political participation" },
+          { id: "1J", question: "How can someone become a U.S. citizen?", answer: "By being born in the U.S., having U.S. citizen parents, or through the naturalization process" },
+          { id: "1K", question: "What is civic engagement?", answer: "Active participation in public life and community affairs to make a positive difference" },
+          { id: "1L", question: "Why is obeying laws a civic duty?", answer: "Laws protect everyone's rights and maintain order in society" },
+          { id: "1M", question: "What is community service?", answer: "Voluntary work done to help people in the community without pay" },
+          { id: "1N", question: "How does being informed help citizens make better decisions?", answer: "Informed citizens can make educated choices when voting and participating in civic life" },
+          { id: "1O", question: "What is the Pledge of Allegiance?", answer: "A pledge of loyalty to the United States and its values of liberty and justice" },
+          { id: "1P", question: "Why is respecting others' rights important for citizenship?", answer: "Democracy works when everyone's rights are protected and respected" },
+          { id: "1Q", question: "What does \"common good\" mean?", answer: "The benefit or well-being of all people in a community or society" },
+          { id: "1R", question: "How can young people prepare for citizenship?", answer: "Learning about government, volunteering, following current events, and developing civic knowledge" },
+          { id: "1S", question: "What is the relationship between rights and responsibilities?", answer: "With rights come responsibilities; citizens must fulfill duties to protect everyone's rights" },
+          { id: "1T", question: "Why is citizenship education important in schools?", answer: "It prepares students to be informed, responsible citizens who can participate effectively in democracy" }
+        ]
+      },
+      {
+        id: 2,
+        name: "Political Process",
+        cards: [
+          { id: "2A", question: "What is the purpose of political parties?", answer: "To organize people with similar political beliefs and help candidates get elected to office" },
+          { id: "2B", question: "What are the two major political parties in the United States?", answer: "Democratic Party and Republican Party" },
+          { id: "2C", question: "What is a primary election?", answer: "An election where party members choose their candidate for the general election" },
+          { id: "2D", question: "What is a general election?", answer: "The final election where voters choose between candidates from different parties" },
+          { id: "2E", question: "What is the Electoral College?", answer: "The system used to elect the President, where each state gets electoral votes based on its representation in Congress" },
+          { id: "2F", question: "How many electoral votes are needed to win the presidency?", answer: "270 out of 538 total electoral votes" },
+          { id: "2G", question: "What is a political campaign?", answer: "An organized effort to win an election, including advertising, rallies, and getting voters to support a candidate" },
+          { id: "2H", question: "What are interest groups?", answer: "Organizations that try to influence government policy on specific issues" },
+          { id: "2I", question: "What is lobbying?", answer: "The practice of trying to influence lawmakers and government officials on specific issues" },
+          { id: "2J", question: "What is public opinion?", answer: "The collective attitudes and beliefs of the public on political issues" },
+          { id: "2K", question: "How do polls measure public opinion?", answer: "By surveying a representative sample of people about their views on issues or candidates" },
+          { id: "2L", question: "What role does the media play in politics?", answer: "Informing the public, covering campaigns, and influencing public opinion on political issues" },
+          { id: "2M", question: "What is voter registration?", answer: "The process of signing up to be eligible to vote in elections" },
+          { id: "2N", question: "What is a ballot?", answer: "The official paper or electronic form used to cast votes in an election" },
+          { id: "2O", question: "What is political participation?", answer: "Ways citizens can be involved in politics, such as voting, campaigning, or contacting elected officials" },
+          { id: "2P", question: "What are political action committees (PACs)?", answer: "Organizations that raise money to support or oppose political candidates and issues" },
+          { id: "2Q", question: "How often are presidential elections held?", answer: "Every four years" },
+          { id: "2R", question: "What is a political platform?", answer: "A party's official statement of beliefs and positions on important issues" },
+          { id: "2S", question: "Why is voter turnout important for democracy?", answer: "Higher turnout means elected officials better represent the will of all the people" },
+          { id: "2T", question: "What is gerrymandering?", answer: "Drawing voting district boundaries to give one political party an unfair advantage" }
+        ]
+      },
+      {
+        id: 3,
+        name: "Roots of American Democracy",
+        cards: [
+          { id: "3A", question: "What document was signed in 1776 declaring independence from Britain?", answer: "The Declaration of Independence" },
+          { id: "3B", question: "Who was the primary author of the Declaration of Independence?", answer: "Thomas Jefferson" },
+          { id: "3C", question: "What are \"unalienable rights\" mentioned in the Declaration?", answer: "Life, liberty, and the pursuit of happiness" },
+          { id: "3D", question: "What was the first governing document of the United States?", answer: "The Articles of Confederation" },
+          { id: "3E", question: "Why were the Articles of Confederation considered weak?", answer: "The federal government had no power to tax, regulate trade, or enforce laws" },
+          { id: "3F", question: "When was the Constitutional Convention held?", answer: "1787 in Philadelphia" },
+          { id: "3G", question: "Who is known as the \"Father of the Constitution\"?", answer: "James Madison" },
+          { id: "3H", question: "What was the Great Compromise?", answer: "An agreement creating a two-house Congress with equal representation in the Senate and population-based representation in the House" },
+          { id: "3I", question: "What was the Three-Fifths Compromise?", answer: "An agreement that counted enslaved people as three-fifths of a person for representation and taxation purposes" },
+          { id: "3J", question: "What are Federalists and Anti-Federalists?", answer: "Federalists supported the Constitution; Anti-Federalists opposed it and wanted a Bill of Rights" },
+          { id: "3K", question: "What are the Federalist Papers?", answer: "Essays written by Hamilton, Madison, and Jay to promote ratification of the Constitution" },
+          { id: "3L", question: "When did the Constitution go into effect?", answer: "1789, after nine states ratified it" },
+          { id: "3M", question: "What is the Bill of Rights?", answer: "The first ten amendments to the Constitution that protect individual rights" },
+          { id: "3N", question: "What Enlightenment ideas influenced American democracy?", answer: "Natural rights, separation of powers, social contract theory, and consent of the governed" },
+          { id: "3O", question: "Who was John Locke and how did he influence America?", answer: "English philosopher who wrote about natural rights and government by consent of the people" },
+          { id: "3P", question: "What was Shays' Rebellion?", answer: "A farmers' uprising that showed the weakness of the Articles of Confederation and led to the Constitutional Convention" },
+          { id: "3Q", question: "What does \"We the People\" mean?", answer: "The opening phrase of the Constitution showing that government power comes from the people" },
+          { id: "3R", question: "What is popular sovereignty?", answer: "The idea that government gets its power from the people" },
+          { id: "3S", question: "What was the Virginia Plan?", answer: "A proposal for representation in Congress based on state population" },
+          { id: "3T", question: "What was the New Jersey Plan?", answer: "A proposal for equal representation for all states in Congress" }
+        ]
+      },
+      {
+        id: 4,
+        name: "Limited Government, Virginia State Government and Local Government",
+        cards: [
+          { id: "4A", question: "What is limited government?", answer: "A government that has restrictions on its power and cannot do whatever it wants" },
+          { id: "4B", question: "What are the three branches of government?", answer: "Legislative, Executive, and Judicial" },
+          { id: "4C", question: "What is separation of powers?", answer: "Dividing government power among three branches to prevent any one branch from becoming too powerful" },
+          { id: "4D", question: "What are checks and balances?", answer: "Each branch of government has ways to limit the power of the other branches" },
+          { id: "4E", question: "What is federalism?", answer: "The division of power between national and state governments" },
+          { id: "4F", question: "Who is the chief executive of Virginia?", answer: "The Governor of Virginia" },
+          { id: "4G", question: "What is the Virginia General Assembly?", answer: "Virginia's state legislature, consisting of the House of Delegates and the Senate" },
+          { id: "4H", question: "How long is the term for Virginia's Governor?", answer: "Four years, and they cannot serve consecutive terms" },
+          { id: "4I", question: "What is the highest court in Virginia?", answer: "The Virginia Supreme Court" },
+          { id: "4J", question: "What are counties in Virginia?", answer: "Local government units that provide services like schools, roads, and law enforcement" },
+          { id: "4K", question: "What is a city in Virginia?", answer: "An independent city that is separate from counties and provides its own services" },
+          { id: "4L", question: "What is a town in Virginia?", answer: "A smaller municipality within a county that provides some local services" },
+          { id: "4M", question: "What does a school board do?", answer: "Governs local public schools, makes education policy, and manages school budgets" },
+          { id: "4N", question: "What is the rule of law?", answer: "The principle that everyone, including government officials, must follow the law" },
+          { id: "4O", question: "What is due process?", answer: "The right to fair treatment under the law, including proper legal procedures" },
+          { id: "4P", question: "What services do local governments typically provide?", answer: "Police, fire protection, schools, roads, water, sewage, and parks" },
+          { id: "4Q", question: "How do local governments get money to provide services?", answer: "Property taxes, sales taxes, fees, and state/federal funding" },
+          { id: "4R", question: "What is judicial review?", answer: "The power of courts to declare laws or government actions unconstitutional" },
+          { id: "4S", question: "What is a town hall meeting?", answer: "A public meeting where citizens can ask questions and discuss issues with local officials" },
+          { id: "4T", question: "Why is local government called the level closest to the people?", answer: "Local officials live in the community and deal with issues that directly affect daily life" }
+        ]
+      },
+      {
+        id: 5,
+        name: "Civil and Criminal Law",
+        cards: [
+          { id: "5A", question: "What is the difference between civil and criminal law?", answer: "Civil law deals with disputes between people; criminal law deals with crimes against society" },
+          { id: "5B", question: "What is a felony?", answer: "A serious crime punishable by more than one year in prison" },
+          { id: "5C", question: "What is a misdemeanor?", answer: "A less serious crime punishable by up to one year in jail" },
+          { id: "5D", question: "What is a plaintiff?", answer: "The person who brings a civil lawsuit against another person" },
+          { id: "5E", question: "What is a defendant?", answer: "The person being sued in a civil case or accused of a crime" },
+          { id: "5F", question: "What does \"innocent until proven guilty\" mean?", answer: "In criminal cases, the defendant is assumed innocent until the prosecution proves guilt" },
+          { id: "5G", question: "What is \"beyond a reasonable doubt\"?", answer: "The high standard of proof required in criminal cases" },
+          { id: "5H", question: "What is \"preponderance of evidence\"?", answer: "The lower standard of proof used in civil cases (more likely than not)" },
+          { id: "5I", question: "What is a contract?", answer: "A legal agreement between two or more parties that is enforceable by law" },
+          { id: "5J", question: "What is a tort?", answer: "A civil wrong that causes harm to another person, such as negligence or intentional harm" },
+          { id: "5K", question: "What is the purpose of criminal law?", answer: "To protect society by punishing criminals and deterring crime" },
+          { id: "5L", question: "What is the purpose of civil law?", answer: "To resolve disputes between people and provide compensation for harm" },
+          { id: "5M", question: "What are the Miranda rights?", answer: "Rights that must be read to arrested suspects, including the right to remain silent and have a lawyer" },
+          { id: "5N", question: "What is probable cause?", answer: "Reasonable belief that a crime has been committed, required for arrests and searches" },
+          { id: "5O", question: "What is the Fourth Amendment?", answer: "Protects against unreasonable searches and seizures" },
+          { id: "5P", question: "What is the Fifth Amendment?", answer: "Protects against self-incrimination and guarantees due process" },
+          { id: "5Q", question: "What is the Sixth Amendment?", answer: "Guarantees the right to a speedy trial, jury trial, and legal counsel" },
+          { id: "5R", question: "What is a grand jury?", answer: "A group of citizens who decide whether there is enough evidence to formally charge someone with a crime" },
+          { id: "5S", question: "What is an indictment?", answer: "A formal charge issued by a grand jury" },
+          { id: "5T", question: "What is the role of a prosecutor?", answer: "To represent the government and prove the defendant's guilt in criminal cases" }
+        ]
+      },
+      {
+        id: 6,
+        name: "Economic Basics, Decision Making",
+        cards: [
+          { id: "6A", question: "What is economics?", answer: "The study of how people make choices about using limited resources to satisfy unlimited wants" },
+          { id: "6B", question: "What is scarcity?", answer: "The basic economic problem that resources are limited while wants are unlimited" },
+          { id: "6C", question: "What is opportunity cost?", answer: "The value of the next best alternative that you give up when making a choice" },
+          { id: "6D", question: "What are the three basic economic questions?", answer: "What to produce? How to produce it? For whom to produce it?" },
+          { id: "6E", question: "What are the factors of production?", answer: "Land, labor, capital, and entrepreneurship" },
+          { id: "6F", question: "What is supply?", answer: "The amount of goods or services that producers are willing and able to offer at different prices" },
+          { id: "6G", question: "What is demand?", answer: "The amount of goods or services that consumers are willing and able to buy at different prices" },
+          { id: "6H", question: "What happens when supply increases and demand stays the same?", answer: "Prices tend to fall" },
+          { id: "6I", question: "What happens when demand increases and supply stays the same?", answer: "Prices tend to rise" },
+          { id: "6J", question: "What is a market economy?", answer: "An economic system where supply and demand determine what is produced and at what price" },
+          { id: "6K", question: "What is a command economy?", answer: "An economic system where the government makes all economic decisions" },
+          { id: "6L", question: "What is a mixed economy?", answer: "An economic system that combines elements of market and command economies" },
+          { id: "6M", question: "What is profit?", answer: "The money left over after all business expenses are paid" },
+          { id: "6N", question: "What is competition?", answer: "When businesses try to attract customers by offering better products or lower prices" },
+          { id: "6O", question: "What is specialization?", answer: "Focusing on producing one or a few goods or services to increase efficiency" },
+          { id: "6P", question: "What is interdependence?", answer: "When people and regions depend on each other for goods and services" },
+          { id: "6Q", question: "What is productivity?", answer: "The amount of output produced per unit of input" },
+          { id: "6R", question: "What is human capital?", answer: "The knowledge, skills, and experience that workers have" },
+          { id: "6S", question: "What is a budget?", answer: "A plan for spending and saving money over a period of time" },
+          { id: "6T", question: "What is the difference between needs and wants?", answer: "Needs are things you must have to survive; wants are things you would like to have" }
+        ]
+      },
+      {
+        id: 7,
+        name: "United States Economy and Global Economics",
+        cards: [
+          { id: "7A", question: "What type of economic system does the United States have?", answer: "A mixed market economy (mostly market with some government involvement)" },
+          { id: "7B", question: "What is free enterprise?", answer: "An economic system where individuals and businesses operate with minimal government interference" },
+          { id: "7C", question: "What is capitalism?", answer: "An economic system based on private ownership and free markets" },
+          { id: "7D", question: "What is GDP?", answer: "Gross Domestic Product - the total value of all goods and services produced in a country" },
+          { id: "7E", question: "What is inflation?", answer: "A general increase in prices over time, reducing the purchasing power of money" },
+          { id: "7F", question: "What is unemployment?", answer: "The percentage of people in the workforce who are looking for jobs but cannot find them" },
+          { id: "7G", question: "What is international trade?", answer: "The exchange of goods and services between countries" },
+          { id: "7H", question: "What are imports?", answer: "Goods and services that a country buys from other countries" },
+          { id: "7I", question: "What are exports?", answer: "Goods and services that a country sells to other countries" },
+          { id: "7J", question: "What is a trade deficit?", answer: "When a country imports more than it exports" },
+          { id: "7K", question: "What is a trade surplus?", answer: "When a country exports more than it imports" },
+          { id: "7L", question: "What is globalization?", answer: "The increasing interconnection of economies, cultures, and societies around the world" },
+          { id: "7M", question: "What is NAFTA/USMCA?", answer: "A trade agreement between the United States, Mexico, and Canada" },
+          { id: "7N", question: "What is a tariff?", answer: "A tax on imported goods designed to protect domestic industries" },
+          { id: "7O", question: "What is the stock market?", answer: "A place where shares of publicly-owned companies are bought and sold" },
+          { id: "7P", question: "What is a recession?", answer: "A period of economic decline characterized by falling GDP and rising unemployment" },
+          { id: "7Q", question: "What is economic growth?", answer: "An increase in a country's production of goods and services over time" },
+          { id: "7R", question: "What is foreign exchange?", answer: "The system of converting one country's currency into another country's currency" },
+          { id: "7S", question: "What is a multinational corporation?", answer: "A company that operates in multiple countries" },
+          { id: "7T", question: "Why do countries trade with each other?", answer: "To get goods they cannot produce efficiently themselves and to sell their surplus goods" }
+        ]
+      },
+      {
+        id: 8,
+        name: "Role of the Government in the Economy",
+        cards: [
+          { id: "8A", question: "What are public goods?", answer: "Goods and services provided by government that everyone can use, like roads and national defense" },
+          { id: "8B", question: "What is the Federal Reserve?", answer: "The central bank of the United States that controls monetary policy" },
+          { id: "8C", question: "What is monetary policy?", answer: "Government control of the money supply and interest rates to influence the economy" },
+          { id: "8D", question: "What is fiscal policy?", answer: "Government use of spending and taxation to influence the economy" },
+          { id: "8E", question: "What are government regulations?", answer: "Rules that businesses must follow to protect consumers, workers, and the environment" },
+          { id: "8F", question: "What is antitrust law?", answer: "Laws that prevent companies from becoming monopolies and ensure fair competition" },
+          { id: "8G", question: "What is a monopoly?", answer: "When one company controls an entire market with no competition" },
+          { id: "8H", question: "What is Social Security?", answer: "A government program that provides retirement income and disability benefits" },
+          { id: "8I", question: "What is Medicare?", answer: "A government program that provides health insurance for people 65 and older" },
+          { id: "8J", question: "What is unemployment insurance?", answer: "Government payments to people who lose their jobs through no fault of their own" },
+          { id: "8K", question: "What is the minimum wage?", answer: "The lowest hourly wage that employers can legally pay workers" },
+          { id: "8L", question: "What is the national debt?", answer: "The total amount of money the federal government owes" },
+          { id: "8M", question: "What is a budget deficit?", answer: "When government spending exceeds government revenue in a given year" },
+          { id: "8N", question: "What is a budget surplus?", answer: "When government revenue exceeds government spending in a given year" },
+          { id: "8O", question: "What are progressive taxes?", answer: "Tax rates that increase as income increases" },
+          { id: "8P", question: "What are regressive taxes?", answer: "Taxes that take a larger percentage of income from lower-income people" },
+          { id: "8Q", question: "What is the purpose of business regulations?", answer: "To protect consumers, ensure fair competition, and promote public safety" },
+          { id: "8R", question: "What is economic stimulus?", answer: "Government actions designed to encourage economic growth during a recession" },
+          { id: "8S", question: "What is corporate tax?", answer: "Tax that businesses pay on their profits" },
+          { id: "8T", question: "Why does government provide public goods?", answer: "Because private companies often won't provide them since they can't charge individuals who use them" }
+        ]
+      },
+      {
+        id: 9,
+        name: "World Geography",
+        cards: [
+          { id: "9A", question: "What are the seven continents?", answer: "North America, South America, Europe, Asia, Africa, Australia, Antarctica" },
+          { id: "9B", question: "What are the five oceans?", answer: "Pacific, Atlantic, Indian, Arctic, Southern (Antarctic)" },
+          { id: "9C", question: "What is the equator?", answer: "An imaginary line around Earth's middle that divides it into Northern and Southern hemispheres" },
+          { id: "9D", question: "What is the Prime Meridian?", answer: "An imaginary line at 0° longitude that divides Earth into Eastern and Western hemispheres" },
+          { id: "9E", question: "What is latitude?", answer: "Lines that run east-west and measure distance north or south of the equator" },
+          { id: "9F", question: "What is longitude?", answer: "Lines that run north-south and measure distance east or west of the Prime Meridian" },
+          { id: "9G", question: "What is climate?", answer: "The average weather conditions in a place over many years" },
+          { id: "9H", question: "What factors influence climate?", answer: "Latitude, altitude, distance from water, ocean currents, and wind patterns" },
+          { id: "9I", question: "What is the largest country in the world by land area?", answer: "Russia" },
+          { id: "9J", question: "What is the most populous country in the world?", answer: "India (as of 2023)" },
+          { id: "9K", question: "What is the longest river in the world?", answer: "The Nile River in Africa" },
+          { id: "9L", question: "What is the highest mountain in the world?", answer: "Mount Everest in the Himalayas" },
+          { id: "9M", question: "What is a peninsula?", answer: "Land that is surrounded by water on three sides" },
+          { id: "9N", question: "What is an archipelago?", answer: "A group or chain of islands" },
+          { id: "9O", question: "What is the Ring of Fire?", answer: "An area around the Pacific Ocean known for earthquakes and volcanic activity" },
+          { id: "9P", question: "What are the main climate zones?", answer: "Tropical, temperate, and polar zones" },
+          { id: "9Q", question: "What is cultural diffusion?", answer: "The spread of cultural elements from one group to another" },
+          { id: "9R", question: "What is human-environment interaction?", answer: "How people adapt to, modify, and depend on their environment" },
+          { id: "9S", question: "What is population density?", answer: "The number of people living in a given area, usually per square mile or kilometer" },
+          { id: "9T", question: "What is migration?", answer: "The movement of people from one place to another to live permanently" }
+        ]
+      }
+    ]
+  },
+  algebra: {
+    name: "Algebra",
+    color: "#8e44ad",
+    icon: "📐",
+    units: [
+      {
+        id: 1,
+        name: "Graphing",
+        cards: [
+          { id: "1A", question: "What is the coordinate plane?", answer: "A two-dimensional plane formed by two perpendicular number lines: the x-axis (horizontal) and y-axis (vertical). Used to graph points and equations." },
+          { id: "1B", question: "What is an ordered pair?", answer: "A pair of numbers (x, y) that represents a point on the coordinate plane. The first number is the x-coordinate, the second is the y-coordinate." },
+          { id: "1C", question: "What are the four quadrants?", answer: "Quadrant I: (+,+), Quadrant II: (-,+), Quadrant III: (-,-), Quadrant IV: (+,-)" },
+          { id: "1D", question: "What is the origin?", answer: "The point (0, 0) where the x-axis and y-axis intersect on the coordinate plane." },
+          { id: "1E", question: "What is the x-intercept?", answer: "The point where a line crosses the x-axis. At this point, y = 0." },
+          { id: "1F", question: "What is the y-intercept?", answer: "The point where a line crosses the y-axis. At this point, x = 0." },
+          { id: "1G", question: "What does it mean to graph a linear equation?", answer: "To plot points that satisfy the equation and connect them to form a straight line." },
+          { id: "1H", question: "How do you find points on a line from an equation?", answer: "Substitute values for x into the equation and solve for y, or substitute values for y and solve for x." },
+          { id: "1I", question: "What is a table of values?", answer: "A chart showing x-values and their corresponding y-values for a given equation." },
+          { id: "1J", question: "What makes a graph linear?", answer: "When all the points form a straight line. The equation has variables with degree 1 (no exponents other than 1)." },
+          { id: "1K", question: "What is the difference between horizontal and vertical lines?", answer: "Horizontal lines have the form y = c (constant y-value). Vertical lines have the form x = c (constant x-value)." },
+          { id: "1L", question: "How do you read coordinates?", answer: "Start at the origin, move right/left for x-value, then up/down for y-value. Format: (x, y)." },
+          { id: "1M", question: "What is scaling on a graph?", answer: "Choosing appropriate intervals for the axes so that all important points fit clearly on the graph." },
+          { id: "1N", question: "What does it mean for points to be collinear?", answer: "Points that lie on the same straight line." },
+          { id: "1O", question: "What is the difference between discrete and continuous graphs?", answer: "Discrete: individual points with gaps. Continuous: connected line or curve with no breaks." },
+          // Practice problems
+          { id: "1P", question: "Plot the point (-3, 2)", answer: "Start at origin (0,0). Move 3 units left (negative x), then 2 units up (positive y). Point is in Quadrant II." },
+          { id: "1Q", question: "What quadrant is the point (-5, -1) in?", answer: "Quadrant III (both coordinates are negative)" },
+          { id: "1R", question: "Find the x-intercept of y = 2x - 6", answer: "Set y = 0: 0 = 2x - 6, so 2x = 6, therefore x = 3. X-intercept: (3, 0)" },
+          { id: "1S", question: "Find the y-intercept of y = 3x + 4", answer: "Set x = 0: y = 3(0) + 4 = 4. Y-intercept: (0, 4)" },
+          { id: "1T", question: "Complete the table for y = x + 2: x = -1, 0, 1", answer: "When x = -1: y = -1 + 2 = 1\\nWhen x = 0: y = 0 + 2 = 2\\nWhen x = 1: y = 1 + 2 = 3" }
+        ]
+      },
+      {
+        id: 2,
+        name: "Slope &amp; Y-Intercept",
+        cards: [
+          { id: "2A", question: "What is slope?", answer: "Slope measures the steepness and direction of a line. It is the rate of change between two points." },
+          { id: "2B", question: "What is the slope formula?", answer: "slope = (y₂ - y₁)/(x₂ - x₁) = rise/run, where (x₁, y₁) and (x₂, y₂) are two points on the line." },
+          { id: "2C", question: "What does positive slope mean?", answer: "The line rises from left to right. As x increases, y increases." },
+          { id: "2D", question: "What does negative slope mean?", answer: "The line falls from left to right. As x increases, y decreases." },
+          { id: "2E", question: "What does zero slope mean?", answer: "The line is horizontal. The y-value stays the same as x changes." },
+          { id: "2F", question: "What does undefined slope mean?", answer: "The line is vertical. The x-value stays the same as y changes (division by zero in slope formula)." },
+          { id: "2G", question: "What is slope-intercept form?", answer: "y = mx + b, where m is the slope and b is the y-intercept." },
+          { id: "2H", question: "What does \"m\" represent in y = mx + b?", answer: "m represents the slope of the line." },
+          { id: "2I", question: "What does \"b\" represent in y = mx + b?", answer: "b represents the y-intercept (where the line crosses the y-axis)." },
+          { id: "2J", question: "How do you identify slope from a graph?", answer: "Choose two points and count rise (vertical change) over run (horizontal change), or use the slope formula." },
+          { id: "2K", question: "What are parallel lines?", answer: "Lines that have the same slope but different y-intercepts. They never intersect." },
+          { id: "2L", question: "What are perpendicular lines?", answer: "Lines whose slopes are negative reciprocals of each other. They intersect at 90° angles." },
+          { id: "2M", question: "How do you find the slope of a perpendicular line?", answer: "Take the negative reciprocal of the original slope. If slope is m, perpendicular slope is -1/m." },
+          { id: "2N", question: "What is rise over run?", answer: "Rise is the vertical change (change in y), run is the horizontal change (change in x). Slope = rise/run." },
+          { id: "2O", question: "How do you graph a line using slope and y-intercept?", answer: "Start at the y-intercept, then use the slope to find the next point by moving rise/run from the first point." },
+          // Practice problems
+          { id: "2P", question: "Find the slope between points (1, 3) and (4, 9)", answer: "slope = (9-3)/(4-1) = 6/3 = 2" },
+          { id: "2Q", question: "Find the slope between points (-2, 5) and (1, -1)", answer: "slope = (-1-5)/(1-(-2)) = -6/3 = -2" },
+          { id: "2R", question: "What is the slope and y-intercept of y = 3x - 4?", answer: "Slope (m) = 3, y-intercept (b) = -4" },
+          { id: "2S", question: "Write in slope-intercept form: slope = -2, y-intercept = 7", answer: "y = -2x + 7" },
+          { id: "2T", question: "Graph y = ½x + 2 using slope and y-intercept", answer: "Start at y-intercept (0, 2). Slope = ½ means rise 1, run 2. Next point: (2, 3). Draw line through these points." }
+        ]
+      },
+      {
+        id: 3,
+        name: "Solving Equations On Both Sides",
+        cards: [
+          { id: "3A", question: "What does it mean to solve an equation?", answer: "To find the value(s) of the variable that make the equation true." },
+          { id: "3B", question: "What are like terms?", answer: "Terms that have the same variable raised to the same power. Example: 3x and 7x are like terms." },
+          { id: "3C", question: "What is the first step when solving equations with variables on both sides?", answer: "Collect all variable terms on one side and all constant terms on the other side." },
+          { id: "3D", question: "What is the Addition Property of Equality?", answer: "If you add the same number to both sides of an equation, the equation remains true." },
+          { id: "3E", question: "What is the Subtraction Property of Equality?", answer: "If you subtract the same number from both sides of an equation, the equation remains true." },
+          { id: "3F", question: "What is the Multiplication Property of Equality?", answer: "If you multiply both sides of an equation by the same non-zero number, the equation remains true." },
+          { id: "3G", question: "What is the Division Property of Equality?", answer: "If you divide both sides of an equation by the same non-zero number, the equation remains true." },
+          { id: "3H", question: "How do you combine like terms?", answer: "Add or subtract the coefficients of terms with the same variable part. Example: 5x + 3x = 8x" },
+          { id: "3I", question: "What does it mean to isolate the variable?", answer: "To get the variable by itself on one side of the equation with a coefficient of 1." },
+          { id: "3J", question: "What is the Distributive Property?", answer: "a(b + c) = ab + ac. Used to remove parentheses by multiplying each term inside by the number outside." },
+          { id: "3K", question: "When do you use the Distributive Property in equation solving?", answer: "When there are parentheses in the equation. Distribute first, then combine like terms." },
+          { id: "3L", question: "What should you always do after solving an equation?", answer: "Check your answer by substituting it back into the original equation." },
+          { id: "3M", question: "What is a multi-step equation?", answer: "An equation that requires more than one operation to solve (combining like terms, using distributive property, etc.)." },
+          { id: "3N", question: "What does \"no solution\" mean?", answer: "The equation is never true, no matter what value is substituted for the variable (like 5 = 3)." },
+          { id: "3O", question: "What does \"infinitely many solutions\" mean?", answer: "The equation is always true, regardless of the value of the variable (like 3 = 3)." },
+          // Practice problems
+          { id: "3P", question: "Solve: 3x + 5 = 2x + 12", answer: "3x - 2x = 12 - 5\\nx = 7" },
+          { id: "3Q", question: "Solve: 5x - 8 = 3x + 4", answer: "5x - 3x = 4 + 8\\n2x = 12\\nx = 6" },
+          { id: "3R", question: "Solve: 7x + 2 = 4x - 10", answer: "7x - 4x = -10 - 2\\n3x = -12\\nx = -4" },
+          { id: "3S", question: "Solve: 2(x + 3) = x + 8", answer: "2x + 6 = x + 8\\n2x - x = 8 - 6\\nx = 2" },
+          { id: "3T", question: "Check: Is x = 3 a solution to 4x - 5 = 2x + 1?", answer: "Substitute: 4(3) - 5 = 2(3) + 1\\n12 - 5 = 6 + 1\\n7 = 7 ✓ Yes!" }
+        ]
+      },
+      {
+        id: 4,
+        name: "Functions",
+        cards: [
+          { id: "4A", question: "What is a function?", answer: "A relationship where each input has exactly one output." },
+          { id: "4B", question: "What is function notation?", answer: "f(x) = ... where f is the function name and x is the input variable." },
+          { id: "4C", question: "What does f(3) mean?", answer: "The output of function f when the input is 3." },
+          { id: "4D", question: "What is the domain of a function?", answer: "The set of all possible input values (x-values)." },
+          { id: "4E", question: "What is the range of a function?", answer: "The set of all possible output values (y-values)." },
+          { id: "4F", question: "What is the vertical line test?", answer: "If any vertical line crosses a graph more than once, it's not a function." },
+          { id: "4G", question: "What is an independent variable?", answer: "The input variable, usually x, that you choose values for." },
+          { id: "4H", question: "What is a dependent variable?", answer: "The output variable, usually y, that depends on the input." },
+          { id: "4I", question: "What is a linear function?", answer: "A function whose graph is a straight line, written as f(x) = mx + b." },
+          { id: "4J", question: "What is a nonlinear function?", answer: "A function whose graph is not a straight line (curves, parabolas, etc.)." },
+          { id: "4K", question: "How do you evaluate a function?", answer: "Substitute the given input value for x and calculate the output." },
+          { id: "4L", question: "What is the difference between an equation and a function?", answer: "All functions are equations, but not all equations are functions (must pass vertical line test)." },
+          { id: "4M", question: "What is a function table?", answer: "A table showing input values and their corresponding output values." },
+          { id: "4N", question: "What is the rate of change of a linear function?", answer: "The slope of the line, showing how much y changes for each unit change in x." },
+          { id: "4O", question: "What is function composition?", answer: "Combining functions by using the output of one as the input of another." },
+          // Practice problems
+          { id: "4P", question: "If f(x) = 2x + 5, find f(3)", answer: "f(3) = 2(3) + 5 = 6 + 5 = 11" },
+          { id: "4Q", question: "If g(x) = x² - 4, find g(-2)", answer: "g(-2) = (-2)² - 4 = 4 - 4 = 0" },
+          { id: "4R", question: "Is the relation {(1,2), (2,3), (1,4)} a function?", answer: "No, because input 1 has two different outputs (2 and 4)." },
+          { id: "4S", question: "What is the domain of f(x) = x + 3?", answer: "All real numbers (no restrictions on x)." },
+          { id: "4T", question: "If h(x) = 3x - 7, find x when h(x) = 8", answer: "8 = 3x - 7\\n15 = 3x\\nx = 5" }
+        ]
+      },
+      {
+        id: 5,
+        name: "Exponents",
+        cards: [
+          { id: "5A", question: "What does an exponent represent?", answer: "How many times to multiply the base by itself." },
+          { id: "5B", question: "What is x⁰ equal to?", answer: "1 (any non-zero number to the power of 0 equals 1)." },
+          { id: "5C", question: "What is the product rule for exponents?", answer: "xᵃ · xᵇ = xᵃ⁺ᵇ (add exponents when multiplying same bases)." },
+          { id: "5D", question: "What is the quotient rule for exponents?", answer: "xᵃ ÷ xᵇ = xᵃ⁻ᵇ (subtract exponents when dividing same bases)." },
+          { id: "5E", question: "What is the power rule for exponents?", answer: "(xᵃ)ᵇ = xᵃᵇ (multiply exponents when raising a power to a power)." },
+          { id: "5F", question: "What is a negative exponent?", answer: "x⁻ⁿ = 1/xⁿ (negative exponent means reciprocal)." },
+          { id: "5G", question: "How do you multiply powers with the same base?", answer: "Keep the base and add the exponents." },
+          { id: "5H", question: "How do you divide powers with the same base?", answer: "Keep the base and subtract the exponents." },
+          { id: "5I", question: "What is scientific notation?", answer: "Writing numbers as a × 10ⁿ where 1 ≤ a &lt; 10 and n is an integer." },
+          { id: "5J", question: "How do you convert to scientific notation?", answer: "Move decimal point to get one non-zero digit before it, count moves for exponent." },
+          { id: "5K", question: "What is the power of a product rule?", answer: "(xy)ⁿ = xⁿyⁿ (distribute the exponent to each factor)." },
+          { id: "5L", question: "What is the power of a quotient rule?", answer: "(x/y)ⁿ = xⁿ/yⁿ (distribute the exponent to numerator and denominator)." },
+          { id: "5M", question: "How do you simplify expressions with exponents?", answer: "Apply exponent rules: combine like bases, simplify powers, handle negatives." },
+          { id: "5N", question: "What does it mean for expressions to be equivalent?", answer: "They have the same value for all valid variable values." },
+          { id: "5O", question: "What is standard form vs. exponential form?", answer: "Standard: 1000, Exponential: 10³" },
+          // Practice problems
+          { id: "5P", question: "Simplify: x³ · x⁵", answer: "x³⁺⁵ = x⁸" },
+          { id: "5Q", question: "Simplify: y⁷ ÷ y²", answer: "y⁷⁻² = y⁵" },
+          { id: "5R", question: "Simplify: (a⁴)³", answer: "a⁴ˣ³ = a¹²" },
+          { id: "5S", question: "Write in scientific notation: 45,000", answer: "4.5 × 10⁴" },
+          { id: "5T", question: "Simplify: 2⁻³", answer: "1/2³ = 1/8" }
+        ]
+      },
+      {
+        id: 6,
+        name: "Polynomials",
+        cards: [
+          { id: "6A", question: "What is a polynomial?", answer: "An expression with variables raised to whole number powers, combined with addition and subtraction." },
+          { id: "6B", question: "What is a monomial?", answer: "A polynomial with exactly one term (like 5x² or -3)." },
+          { id: "6C", question: "What is a binomial?", answer: "A polynomial with exactly two terms (like x + 5 or 3x² - 7)." },
+          { id: "6D", question: "What is a trinomial?", answer: "A polynomial with exactly three terms (like x² + 2x + 1)." },
+          { id: "6E", question: "What is the degree of a polynomial?", answer: "The highest power of the variable in the polynomial." },
+          { id: "6F", question: "How do you add polynomials?", answer: "Combine like terms by adding their coefficients." },
+          { id: "6G", question: "How do you subtract polynomials?", answer: "Distribute the negative sign, then combine like terms." },
+          { id: "6H", question: "What is the leading coefficient?", answer: "The coefficient of the term with the highest degree." },
+          { id: "6I", question: "What is a constant term?", answer: "A term with no variable (just a number)." },
+          { id: "6J", question: "How do you multiply a monomial by a polynomial?", answer: "Use the distributive property to multiply the monomial by each term." },
+          { id: "6K", question: "What is standard form for a polynomial?", answer: "Terms arranged from highest degree to lowest degree." },
+          { id: "6L", question: "How do you evaluate a polynomial?", answer: "Substitute the given value for the variable and calculate." },
+          { id: "6M", question: "What are like terms in polynomials?", answer: "Terms with the same variable and the same exponent." },
+          { id: "6N", question: "Can polynomials have negative exponents?", answer: "No, polynomials only have whole number (non-negative) exponents." },
+          { id: "6O", question: "What is the difference between a polynomial and an expression?", answer: "All polynomials are expressions, but expressions can include fractions, roots, etc." },
+          // Practice problems
+          { id: "6P", question: "Add: (3x² + 2x - 1) + (x² - 4x + 5)", answer: "4x² - 2x + 4" },
+          { id: "6Q", question: "Subtract: (5x² + 3x) - (2x² - x + 7)", answer: "3x² + 4x - 7" },
+          { id: "6R", question: "What is the degree of 4x³ - 2x + 7?", answer: "3 (highest power of x)" },
+          { id: "6S", question: "Multiply: 3x(2x² - 4x + 1)", answer: "6x³ - 12x² + 3x" },
+          { id: "6T", question: "If P(x) = x² + 2x - 3, find P(2)", answer: "P(2) = (2)² + 2(2) - 3 = 4 + 4 - 3 = 5" }
+        ]
+      }
+    ]
+  },
+  science: {
+    name: "Science",
+    color: "#27ae60",
+    icon: "🔬",
+    units: [
+      {
+        id: 1,
+        name: "Lab Safety",
+        cards: [
+          { id: "S1A", question: "What should you do if chemicals spill on your skin?", answer: "Immediately rinse with plenty of water for at least 15 minutes and notify the teacher" },
+          { id: "S1B", question: "Why should you wear safety goggles in the lab?", answer: "To protect your eyes from chemical splashes, glass fragments, and other hazards" },
+          { id: "S1C", question: "What is the proper way to smell a chemical in the lab?", answer: "Use the wafting technique - wave your hand over the container to bring fumes toward your nose" },
+          { id: "S1D", question: "Where should you locate the fire extinguisher and eyewash station?", answer: "Know their exact locations before starting any lab activity" },
+          { id: "S1E", question: "What should you do with broken glassware?", answer: "Never pick it up with your hands; notify the teacher who will clean it up properly" },
+          { id: "S1F", question: "How should you handle a hot beaker or test tube?", answer: "Use tongs, heat-resistant gloves, or let it cool down first" },
+          { id: "S1G", question: "What should you wear on your feet in the lab?", answer: "Closed-toe shoes that cover your entire foot" },
+          { id: "S1H", question: "How should you dispose of chemicals?", answer: "Follow teacher's instructions; never pour them down the drain unless specifically told to do so" },
+          { id: "S1I", question: "What should you do if a fire starts in the lab?", answer: "Alert the teacher immediately, turn off gas valves if safe, and evacuate if instructed" },
+          { id: "S1J", question: "Why should you tie back long hair in the lab?", answer: "To prevent it from catching fire or getting into chemicals" },
+          { id: "S1K", question: "What should you do before leaving the lab?", answer: "Clean your work area, wash your hands, and turn off all equipment" },
+          { id: "S1L", question: "When should you eat or drink in the lab?", answer: "Never - food and drinks are prohibited in the lab" },
+          { id: "S1M", question: "How should you read measurements on glassware?", answer: "Read at eye level at the bottom of the meniscus (curved surface)" },
+          { id: "S1N", question: "What is the first thing you should do when entering the lab?", answer: "Read all instructions and safety procedures before beginning work" },
+          { id: "S1O", question: "How should you carry a microscope?", answer: "With two hands - one on the arm and one supporting the base" },
+          { id: "S1P", question: "What should you do if you cut yourself in the lab?", answer: "Apply pressure to stop bleeding and notify the teacher immediately" },
+          { id: "S1Q", question: "Why shouldn't you return unused chemicals to their original containers?", answer: "It can contaminate the entire supply" },
+          { id: "S1R", question: "What type of clothing should you avoid wearing in the lab?", answer: "Loose sleeves, synthetic fabrics, sandals, and loose jewelry" },
+          { id: "S1S", question: "How should you heat a test tube?", answer: "Point the opening away from yourself and others, and move it constantly in the flame" },
+          { id: "S1T", question: "What does MSDS stand for and why is it important?", answer: "Material Safety Data Sheet - provides safety information about chemicals and how to handle them" }
+        ]
+      },
+      {
+        id: 2,
+        name: "Scientific Investigations",
+        cards: [
+          { id: "S2A", question: "What is the scientific method?", answer: "A systematic process used to investigate questions and test hypotheses" },
+          { id: "S2B", question: "What are the steps of the scientific method?", answer: "Observation, Question, Hypothesis, Experiment, Data Collection, Analysis, Conclusion" },
+          { id: "S2C", question: "What is a hypothesis?", answer: "A testable prediction or educated guess about what will happen in an experiment" },
+          { id: "S2D", question: "What is the difference between independent and dependent variables?", answer: "Independent variable is what you change; dependent variable is what you measure" },
+          { id: "S2E", question: "What is a control group?", answer: "The group in an experiment that does not receive the treatment being tested" },
+          { id: "S2F", question: "What are constants in an experiment?", answer: "Factors that are kept the same throughout the experiment" },
+          { id: "S2G", question: "What is qualitative data?", answer: "Descriptive data that cannot be measured with numbers (color, texture, smell)" },
+          { id: "S2H", question: "What is quantitative data?", answer: "Numerical data that can be measured and counted" },
+          { id: "S2I", question: "Why do scientists repeat experiments?", answer: "To verify results and ensure reliability and accuracy" },
+          { id: "S2J", question: "What is peer review?", answer: "When other scientists examine and evaluate research before it's published" },
+          { id: "S2K", question: "What is a theory in science?", answer: "A well-supported explanation for natural phenomena based on extensive evidence" },
+          { id: "S2L", question: "What is a scientific law?", answer: "A statement that describes what happens in nature under certain conditions" },
+          { id: "S2M", question: "What is bias in scientific research?", answer: "Personal opinions or preferences that can affect how data is collected or interpreted" },
+          { id: "S2N", question: "What is the purpose of a lab report?", answer: "To document procedures, results, and conclusions so others can understand and repeat the experiment" },
+          { id: "S2O", question: "What is correlation vs. causation?", answer: "Correlation means two things happen together; causation means one thing causes another" },
+          { id: "S2P", question: "What is a sample size and why does it matter?", answer: "The number of subjects tested; larger samples give more reliable results" },
+          { id: "S2Q", question: "What is an observation?", answer: "Information gathered through the senses or instruments" },
+          { id: "S2R", question: "What is an inference?", answer: "A conclusion based on observations and prior knowledge" },
+          { id: "S2S", question: "What makes a good scientific question?", answer: "It should be testable, specific, and based on observations" },
+          { id: "S2T", question: "What is the difference between accuracy and precision?", answer: "Accuracy is how close to the true value; precision is how close repeated measurements are to each other" }
+        ]
+      },
+      {
+        id: 3,
+        name: "Earth and Space Systems",
+        cards: [
+          { id: "S3A", question: "What are the four layers of the Earth?", answer: "Crust, mantle, outer core, and inner core" },
+          { id: "S3B", question: "What is plate tectonics?", answer: "The theory that Earth's crust is made of moving plates that interact at their boundaries" },
+          { id: "S3C", question: "What causes earthquakes?", answer: "Movement of tectonic plates that creates stress and sudden release of energy" },
+          { id: "S3D", question: "What are the three types of plate boundaries?", answer: "Convergent (plates collide), divergent (plates separate), and transform (plates slide past each other)" },
+          { id: "S3E", question: "What is the water cycle?", answer: "The continuous movement of water through evaporation, condensation, precipitation, and collection" },
+          { id: "S3F", question: "What causes weather?", answer: "Unequal heating of Earth's surface by the sun creates air movement and weather patterns" },
+          { id: "S3G", question: "What are the phases of the moon?", answer: "New moon, waxing crescent, first quarter, waxing gibbous, full moon, waning gibbous, third quarter, waning crescent" },
+          { id: "S3H", question: "What causes seasons on Earth?", answer: "Earth's tilted axis as it orbits the sun" },
+          { id: "S3I", question: "What is the difference between climate and weather?", answer: "Weather is short-term atmospheric conditions; climate is long-term weather patterns" },
+          { id: "S3J", question: "What is a solar eclipse?", answer: "When the moon passes between Earth and the sun, blocking sunlight" },
+          { id: "S3K", question: "What is a lunar eclipse?", answer: "When Earth passes between the sun and moon, casting a shadow on the moon" },
+          { id: "S3L", question: "What causes tides?", answer: "Gravitational pull of the moon and sun on Earth's oceans" },
+          { id: "S3M", question: "What is erosion?", answer: "The wearing away and transportation of rock and soil by wind, water, or ice" },
+          { id: "S3N", question: "What is weathering?", answer: "The breaking down of rocks into smaller pieces by physical or chemical processes" },
+          { id: "S3O", question: "What is the greenhouse effect?", answer: "Gases in the atmosphere trap heat from the sun, warming Earth's surface" },
+          { id: "S3P", question: "What is the order of planets from the sun?", answer: "Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune" },
+          { id: "S3Q", question: "What is a galaxy?", answer: "A large collection of stars, gas, and dust held together by gravity" },
+          { id: "S3R", question: "What is the difference between a star and a planet?", answer: "Stars produce their own light through nuclear fusion; planets reflect light from stars" },
+          { id: "S3S", question: "What is the rock cycle?", answer: "The continuous process of rock formation, breakdown, and reformation through igneous, sedimentary, and metamorphic processes" },
+          { id: "S3T", question: "What is convection and how does it affect Earth?", answer: "Heat transfer through fluid movement; drives plate tectonics, weather patterns, and ocean currents" }
+        ]
+      },
+      {
+        id: 4,
+        name: "Life Systems",
+        cards: [
+          { id: "S4A", question: "What are the characteristics of living things?", answer: "Organization, growth, reproduction, response to environment, homeostasis, metabolism, and heredity" },
+          { id: "S4B", question: "What is the basic unit of life?", answer: "The cell" },
+          { id: "S4C", question: "What is the difference between prokaryotic and eukaryotic cells?", answer: "Prokaryotic cells lack a nucleus; eukaryotic cells have a nucleus and membrane-bound organelles" },
+          { id: "S4D", question: "What is photosynthesis?", answer: "The process where plants use sunlight, carbon dioxide, and water to make glucose and oxygen" },
+          { id: "S4E", question: "What is cellular respiration?", answer: "The process where cells break down glucose using oxygen to release energy (ATP)" },
+          { id: "S4F", question: "What is the function of the nucleus?", answer: "Controls cell activities and contains the cell's DNA" },
+          { id: "S4G", question: "What is the function of mitochondria?", answer: "Produces energy (ATP) for the cell through cellular respiration" },
+          { id: "S4H", question: "What is the function of chloroplasts?", answer: "Conduct photosynthesis in plant cells" },
+          { id: "S4I", question: "What is DNA?", answer: "Deoxyribonucleic acid - the molecule that carries genetic information" },
+          { id: "S4J", question: "What is heredity?", answer: "The passing of traits from parents to offspring through genes" },
+          { id: "S4K", question: "What is adaptation?", answer: "A trait that helps an organism survive and reproduce in its environment" },
+          { id: "S4L", question: "What is natural selection?", answer: "The process where organisms with beneficial traits are more likely to survive and reproduce" },
+          { id: "S4M", question: "What is homeostasis?", answer: "The ability of an organism to maintain stable internal conditions" },
+          { id: "S4N", question: "What are the levels of organization in living things?", answer: "Cell, tissue, organ, organ system, organism" },
+          { id: "S4O", question: "What is the difference between sexual and asexual reproduction?", answer: "Sexual reproduction involves two parents; asexual reproduction involves one parent producing identical offspring" },
+          { id: "S4P", question: "What is classification in biology?", answer: "The grouping of organisms based on their similarities and evolutionary relationships" },
+          { id: "S4Q", question: "What are the kingdoms of life?", answer: "Bacteria, Archaea, Protists, Fungi, Plants, and Animals" },
+          { id: "S4R", question: "What is evolution?", answer: "The gradual change in species over time through natural selection" },
+          { id: "S4S", question: "What is a mutation?", answer: "A change in DNA that can be passed to offspring" },
+          { id: "S4T", question: "What is the cell membrane?", answer: "The barrier that controls what enters and leaves the cell" }
+        ]
+      },
+      {
+        id: 5,
+        name: "Ecosystems",
+        cards: [
+          { id: "S5A", question: "What is an ecosystem?", answer: "All living and non-living things in an area that interact with each other" },
+          { id: "S5B", question: "What is a food chain?", answer: "A series showing how energy flows from one organism to another through feeding" },
+          { id: "S5C", question: "What is a food web?", answer: "A complex network of interconnected food chains in an ecosystem" },
+          { id: "S5D", question: "What are producers?", answer: "Organisms that make their own food through photosynthesis (plants, algae)" },
+          { id: "S5E", question: "What are primary consumers?", answer: "Herbivores that eat producers" },
+          { id: "S5F", question: "What are secondary consumers?", answer: "Carnivores that eat primary consumers" },
+          { id: "S5G", question: "What are decomposers?", answer: "Organisms that break down dead material and return nutrients to the ecosystem" },
+          { id: "S5H", question: "What is the carbon cycle?", answer: "The movement of carbon through the atmosphere, oceans, land, and living organisms" },
+          { id: "S5I", question: "What is the nitrogen cycle?", answer: "The process of converting nitrogen gas into forms that plants can use" },
+          { id: "S5J", question: "What is a population?", answer: "All members of the same species living in the same area" },
+          { id: "S5K", question: "What is a community?", answer: "All populations of different species living in the same area" },
+          { id: "S5L", question: "What is carrying capacity?", answer: "The maximum number of individuals an environment can support" },
+          { id: "S5M", question: "What are biotic factors?", answer: "Living components of an ecosystem (plants, animals, bacteria)" },
+          { id: "S5N", question: "What are abiotic factors?", answer: "Non-living components of an ecosystem (temperature, light, water, soil)" },
+          { id: "S5O", question: "What is symbiosis?", answer: "Close relationship between two different species" },
+          { id: "S5P", question: "What is mutualism?", answer: "Symbiotic relationship where both species benefit" },
+          { id: "S5Q", question: "What is predation?", answer: "Relationship where one organism hunts and eats another" },
+          { id: "S5R", question: "What is competition?", answer: "When organisms compete for the same limited resources" },
+          { id: "S5S", question: "What is succession?", answer: "The gradual change in species composition in an ecosystem over time" },
+          { id: "S5T", question: "What is biodiversity?", answer: "The variety of life in an ecosystem" }
+        ]
+      },
+      {
+        id: 6,
+        name: "Force and Motion",
+        cards: [
+          { id: "S6A", question: "What is motion?", answer: "A change in position over time" },
+          { id: "S6B", question: "What is speed?", answer: "The distance traveled divided by time" },
+          { id: "S6C", question: "What is velocity?", answer: "Speed in a specific direction" },
+          { id: "S6D", question: "What is acceleration?", answer: "The rate of change of velocity over time" },
+          { id: "S6E", question: "What is a force?", answer: "A push or pull that can change an object's motion" },
+          { id: "S6F", question: "What is Newton's First Law of Motion?", answer: "An object at rest stays at rest, and an object in motion stays in motion, unless acted upon by a force" },
+          { id: "S6G", question: "What is Newton's Second Law of Motion?", answer: "Force equals mass times acceleration (F = ma)" },
+          { id: "S6H", question: "What is Newton's Third Law of Motion?", answer: "For every action, there is an equal and opposite reaction" },
+          { id: "S6I", question: "What is inertia?", answer: "The tendency of an object to resist changes in motion" },
+          { id: "S6J", question: "What is friction?", answer: "A force that opposes motion between two surfaces in contact" },
+          { id: "S6K", question: "What is gravity?", answer: "The force of attraction between objects with mass" },
+          { id: "S6L", question: "What is momentum?", answer: "Mass times velocity (p = mv)" },
+          { id: "S6M", question: "What is a balanced force?", answer: "When forces acting on an object are equal and opposite, resulting in no change in motion" },
+          { id: "S6N", question: "What is an unbalanced force?", answer: "When forces acting on an object are not equal, causing acceleration" },
+          { id: "S6O", question: "What is the difference between mass and weight?", answer: "Mass is the amount of matter; weight is the force of gravity on an object" },
+          { id: "S6P", question: "What is a simple machine?", answer: "A device that makes work easier by changing force, distance, or direction" },
+          { id: "S6Q", question: "What are the six simple machines?", answer: "Lever, wheel and axle, pulley, inclined plane, wedge, and screw" },
+          { id: "S6R", question: "What is work in physics?", answer: "Force applied to an object times the distance the object moves (W = F × d)" },
+          { id: "S6S", question: "What is mechanical advantage?", answer: "The ratio of output force to input force in a machine" },
+          { id: "S6T", question: "What is free fall?", answer: "Motion under the influence of gravity alone" }
+        ]
+      },
+      {
+        id: 7,
+        name: "Matter",
+        cards: [
+          { id: "S7A", question: "What is matter?", answer: "Anything that has mass and takes up space" },
+          { id: "S7B", question: "What are the three states of matter?", answer: "Solid, liquid, and gas" },
+          { id: "S7C", question: "What is an atom?", answer: "The smallest unit of an element that retains the properties of that element" },
+          { id: "S7D", question: "What are the three parts of an atom?", answer: "Protons, neutrons, and electrons" },
+          { id: "S7E", question: "What is an element?", answer: "A pure substance made of only one type of atom" },
+          { id: "S7F", question: "What is a compound?", answer: "A substance made of two or more elements chemically bonded together" },
+          { id: "S7G", question: "What is a mixture?", answer: "Two or more substances combined physically but not chemically bonded" },
+          { id: "S7H", question: "What is the periodic table?", answer: "An organized chart of all known elements arranged by atomic number" },
+          { id: "S7I", question: "What is density?", answer: "Mass divided by volume (D = m/V)" },
+          { id: "S7J", question: "What is a physical change?", answer: "A change in appearance or state without forming a new substance" },
+          { id: "S7K", question: "What is a chemical change?", answer: "A change that forms a new substance with different properties" },
+          { id: "S7L", question: "What is sublimation?", answer: "The change from solid directly to gas without becoming liquid" },
+          { id: "S7M", question: "What is condensation?", answer: "The change from gas to liquid" },
+          { id: "S7N", question: "What is evaporation?", answer: "The change from liquid to gas" },
+          { id: "S7O", question: "What is an ion?", answer: "An atom that has gained or lost electrons and has a charge" },
+          { id: "S7P", question: "What is a molecule?", answer: "Two or more atoms bonded together" },
+          { id: "S7Q", question: "What is solubility?", answer: "The ability of a substance to dissolve in another substance" },
+          { id: "S7R", question: "What is pH?", answer: "A scale measuring how acidic or basic a solution is" },
+          { id: "S7S", question: "What is an acid?", answer: "A substance with a pH less than 7 that releases hydrogen ions" },
+          { id: "S7T", question: "What is a base?", answer: "A substance with a pH greater than 7 that releases hydroxide ions" }
+        ]
+      },
+      {
+        id: 8,
+        name: "Energy",
+        cards: [
+          { id: "S8A", question: "What is energy?", answer: "The ability to do work or cause change" },
+          { id: "S8B", question: "What are the two main types of energy?", answer: "Kinetic energy and potential energy" },
+          { id: "S8C", question: "What is kinetic energy?", answer: "Energy of motion" },
+          { id: "S8D", question: "What is potential energy?", answer: "Stored energy due to position or condition" },
+          { id: "S8E", question: "What is the law of conservation of energy?", answer: "Energy cannot be created or destroyed, only transformed from one form to another" },
+          { id: "S8F", question: "What is thermal energy?", answer: "Energy from the movement of particles in matter; heat energy" },
+          { id: "S8G", question: "What is chemical energy?", answer: "Energy stored in chemical bonds" },
+          { id: "S8H", question: "What is electrical energy?", answer: "Energy from moving electrical charges" },
+          { id: "S8I", question: "What is nuclear energy?", answer: "Energy stored in the nucleus of atoms" },
+          { id: "S8J", question: "What is mechanical energy?", answer: "The sum of kinetic and potential energy in a system" },
+          { id: "S8K", question: "What is electromagnetic energy?", answer: "Energy that travels as waves, including light and radio waves" },
+          { id: "S8L", question: "What is power?", answer: "The rate at which work is done or energy is transferred" },
+          { id: "S8M", question: "What is heat?", answer: "The transfer of thermal energy from a warmer object to a cooler object" },
+          { id: "S8N", question: "What are the three methods of heat transfer?", answer: "Conduction, convection, and radiation" },
+          { id: "S8O", question: "What is conduction?", answer: "Heat transfer through direct contact between particles" },
+          { id: "S8P", question: "What is convection?", answer: "Heat transfer through the movement of fluids (liquids and gases)" },
+          { id: "S8Q", question: "What is radiation?", answer: "Heat transfer through electromagnetic waves without matter" },
+          { id: "S8R", question: "What is temperature?", answer: "A measure of the average kinetic energy of particles in a substance" },
+          { id: "S8S", question: "What is renewable energy?", answer: "Energy sources that can be replenished naturally, like solar and wind power" },
+          { id: "S8T", question: "What is nonrenewable energy?", answer: "Energy sources that cannot be easily replaced, like fossil fuels and nuclear materials" }
+        ]
+      }
+    ]
+  }
+};</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2025-06-29T01:39:32.765Z
+            </div>
+        <script src="../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
+    </body>
+</html>
+    
