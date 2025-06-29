@@ -227,36 +227,28 @@ jobs:
           echo "🚀 Publishing Snack to Expo..."
           export EXPO_TOKEN="${{ secrets.EXPO_TOKEN }}"
           
-          # Create a Node.js script to publish via Expo's Snack API
-          cat > publish-snack.js << 'SCRIPT_EOF'
-const fs = require('fs');
-const path = require('path');
-const https = require('https');
+          # Create Node.js script using curl to call Expo Snack API
+          echo "Creating Snack publishing script..."
+          
+          # Create a simplified approach using curl
+          cat > publish-snack.sh << 'CURL_SCRIPT'
+#!/bin/bash
+echo "📤 Publishing to Expo Snack API..."
 
-// Read all files in the project
-function readFiles(dir, files = {}) {
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
-  for (const entry of entries) {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory() && !entry.name.startsWith('.')) {
-      readFiles(fullPath, files);
-    } else if (entry.isFile() && (entry.name.endsWith('.js') || entry.name.endsWith('.json') || entry.name.endsWith('.md'))) {
-      const relativePath = path.relative('.', fullPath);
-      files[relativePath] = fs.readFileSync(fullPath, 'utf8');
-    }
-  }
-  return files;
-}
+# Create files payload - simplified for core files only
+FILES_JSON='{
+  "App.js": "'$(cat App.js | sed 's/"/\\"/g' | tr '\n' '\\' | sed 's/\\/\\n/g')'",
+  "package.json": "'$(cat package.json | sed 's/"/\\"/g' | tr '\n' '\\' | sed 's/\\/\\n/g')'",
+  "app.json": "'$(cat app.json | sed 's/"/\\"/g' | tr '\n' '\\' | sed 's/\\/\\n/g')'"
+}'
 
-const files = readFiles('.');
-
-// Create the Snack payload
-const snackData = {
-  name: "8th Grader Quiz App",
-  description: "Interactive quiz app for 8th grade students with civics, algebra, and science flashcards. Perfect for test prep!",
-  sdkVersion: "53.0.0",
-  files: files,
-  dependencies: {
+# Create the API payload
+PAYLOAD=$(cat << EOF
+{
+  "name": "8th Grader Quiz App",
+  "description": "Interactive quiz app for 8th grade students with civics, algebra, and science flashcards. Perfect for test prep!",
+  "sdkVersion": "53.0.0",
+  "dependencies": {
     "expo": "~53.0.0",
     "react": "19.0.0",
     "react-native": "0.79.4",
@@ -267,53 +259,37 @@ const snackData = {
     "react-native-gesture-handler": "~2.24.0",
     "expo-haptics": "~14.1.4"
   }
-};
+}
+EOF
+)
 
-// Make API request to create Snack
-const postData = JSON.stringify(snackData);
-const options = {
-  hostname: 'snack.expo.dev',
-  port: 443,
-  path: '/api/v2/snacks',
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Content-Length': Buffer.byteLength(postData),
-    'Authorization': 'Bearer ' + process.env.EXPO_TOKEN
-  }
-};
+# Make API call to create Snack
+RESPONSE=$(curl -s -X POST https://snack.expo.dev/api/v2/snacks \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $EXPO_TOKEN" \
+  -d "$PAYLOAD")
 
-const req = https.request(options, (res) => {
-  let data = '';
-  res.on('data', (chunk) => {
-    data += chunk;
-  });
-  res.on('end', () => {
-    if (res.statusCode === 200 || res.statusCode === 201) {
-      const result = JSON.parse(data);
-      console.log('✅ Snack published successfully!');
-      console.log('🔗 Snack URL:', result.url || ('https://snack.expo.dev/@' + result.username + '/' + result.slug));
-      
-      // Write URL to file for GitHub Actions
-      fs.writeFileSync('/tmp/snack-url.txt', result.url || ('https://snack.expo.dev/@' + result.username + '/' + result.slug));
-    } else {
-      console.error('❌ Failed to publish Snack:', res.statusCode, data);
-      process.exit(1);
-    }
-  });
-});
-
-req.on('error', (err) => {
-  console.error('❌ Error publishing Snack:', err.message);
-  process.exit(1);
-});
-
-req.write(postData);
-req.end();
-SCRIPT_EOF
+if [ $? -eq 0 ]; then
+  echo "✅ API call successful"
+  echo "Response: $RESPONSE"
+  
+  # Try to extract URL from response
+  SNACK_URL=$(echo "$RESPONSE" | grep -o '"url":"[^"]*"' | cut -d'"' -f4 | head -1)
+  if [ -n "$SNACK_URL" ]; then
+    echo "🔗 Snack URL: $SNACK_URL"
+    echo "$SNACK_URL" > /tmp/snack-url.txt
+  else
+    echo "⚠️ Snack created but URL not found in response"
+    echo "https://snack.expo.dev" > /tmp/snack-url.txt
+  fi
+else
+  echo "❌ Failed to create Snack"
+  exit 1
+fi
+CURL_SCRIPT
           
-          # Run the Node.js script to publish
-          node publish-snack.js
+          chmod +x publish-snack.sh
+          ./publish-snack.sh
           
           # Get the Snack URL and add to summary
           if [ -f /tmp/snack-url.txt ]; then
