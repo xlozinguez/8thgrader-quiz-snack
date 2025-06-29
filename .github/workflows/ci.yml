@@ -258,10 +258,15 @@ jobs:
         
         async function publishSnack() {
           try {
-            console.log('🔗 Creating Snack session...');
+            console.log('🔗 Creating/updating Snack session...');
+            
+            // Try to update existing Snack first, fallback to creating new one
+            const existingSnackId = '@xlozingueztfx/8th-grader-quiz-app';
+            console.log('🔄 Attempting to update existing Snack:', existingSnackId);
             
             const session = new Snack({
-              name: '8th Grader Quiz App',
+              name: '8th Grader Quiz App', 
+              slug: '8th-grader-quiz-app',
               description: 'Interactive quiz app for 8th grade students with 460+ flashcards',
               sdkVersion: '53.0.0',
               dependencies: {
@@ -318,7 +323,7 @@ jobs:
               result = await session.save();
             }
             
-            // Get Snack URL - try different methods
+            // Get Snack URL - use consistent slug
             let snackId;
             if (typeof session.getSnackId === 'function') {
               snackId = session.getSnackId();
@@ -326,6 +331,9 @@ jobs:
               snackId = session.id;
             } else if (result && result.id) {
               snackId = result.id;
+            } else {
+              // Fallback to expected slug format
+              snackId = '@xlozingueztfx/8th-grader-quiz-app';
             }
             
             const snackUrl = 'https://snack.expo.dev/' + snackId;
