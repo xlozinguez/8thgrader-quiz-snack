@@ -270,11 +270,11 @@ jobs:
             const screenFiles = fs.readdirSync('screens');
             for (const file of screenFiles) {
               if (file.endsWith('.js')) {
-                files[\`screens/\${file}\`] = fs.readFileSync(\`screens/\${file}\`, 'utf8');
+                files['screens/' + file] = fs.readFileSync('screens/' + file, 'utf8');
               }
             }
             
-            console.log(\`📄 Adding \${Object.keys(files).length} files to Snack...\`);
+            console.log('📄 Adding ' + Object.keys(files).length + ' files to Snack...');
             
             // Update session with files
             await session.sendCodeAsync(files);
@@ -283,9 +283,9 @@ jobs:
             console.log('💾 Saving Snack...');
             const result = await session.saveAsync();
             
-            const snackUrl = \`https://snack.expo.dev/\${session.getSnackId()}\`;
-            console.log(\`✅ Snack published successfully!\`);
-            console.log(\`🔗 Snack URL: \${snackUrl}\`);
+            const snackUrl = 'https://snack.expo.dev/' + session.getSnackId();
+            console.log('✅ Snack published successfully!');
+            console.log('🔗 Snack URL: ' + snackUrl);
             
             // Save URL for GitHub summary
             fs.writeFileSync('/tmp/snack-url.txt', snackUrl);
@@ -313,7 +313,7 @@ jobs:
         }
         
         publishSnack().then(url => {
-          console.log(\`🎉 Final Snack URL: \${url}\`);
+          console.log('🎉 Final Snack URL: ' + url);
           process.exit(0);
         }).catch(err => {
           console.error('💥 Fatal error:', err);
