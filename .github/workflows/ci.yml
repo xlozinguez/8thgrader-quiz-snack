@@ -223,7 +223,7 @@ jobs:
         cd snack-deploy
         echo "📦 Installing Snack SDK..."
         npm init -y
-        npm install snack-sdk node-fetch
+        npm install snack-sdk node-fetch --legacy-peer-deps
         
     - name: Publish to Expo Snack via API
       run: |
