@@ -625,8 +625,3 @@ export const flashcardsData = {
     ]
   }
 };
-
-// Support both ES modules and CommonJS
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { flashcardsData };
-}
