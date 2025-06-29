@@ -237,8 +237,6 @@ jobs:
         
         async function publishSnack() {
           try {
-            console.log('🔍 Debug: SnackSDK =', typeof SnackSDK, Object.keys(SnackSDK || {}));
-            console.log('🔍 Debug: Snack =', typeof Snack);
             console.log('🔗 Creating Snack session...');
             
             const session = new Snack({
@@ -282,9 +280,6 @@ jobs:
             console.log('📄 Adding ' + Object.keys(files).length + ' files to Snack...');
             
             // Update session with files
-            console.log('🔍 Available methods:', Object.getOwnPropertyNames(Object.getPrototypeOf(session)));
-            
-            // Try different method names based on snack-sdk API
             if (typeof session.sendCodeAsync === 'function') {
               await session.sendCodeAsync(files);
             } else if (typeof session.updateFiles === 'function') {
