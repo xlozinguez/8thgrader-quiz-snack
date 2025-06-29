@@ -227,69 +227,48 @@ jobs:
           echo "🚀 Publishing Snack to Expo..."
           export EXPO_TOKEN="${{ secrets.EXPO_TOKEN }}"
           
-          # Create Node.js script using curl to call Expo Snack API
-          echo "Creating Snack publishing script..."
+          # Use direct curl approach to avoid YAML syntax issues
+          echo "Publishing to Expo Snack API..."
           
-          # Create a simplified approach using curl
-          cat > publish-snack.sh << 'CURL_SCRIPT'
-#!/bin/bash
-echo "📤 Publishing to Expo Snack API..."
-
-# Create files payload - simplified for core files only
-FILES_JSON='{
-  "App.js": "'$(cat App.js | sed 's/"/\\"/g' | tr '\n' '\\' | sed 's/\\/\\n/g')'",
-  "package.json": "'$(cat package.json | sed 's/"/\\"/g' | tr '\n' '\\' | sed 's/\\/\\n/g')'",
-  "app.json": "'$(cat app.json | sed 's/"/\\"/g' | tr '\n' '\\' | sed 's/\\/\\n/g')'"
-}'
-
-# Create the API payload
-PAYLOAD=$(cat << EOF
-{
-  "name": "8th Grader Quiz App",
-  "description": "Interactive quiz app for 8th grade students with civics, algebra, and science flashcards. Perfect for test prep!",
-  "sdkVersion": "53.0.0",
-  "dependencies": {
-    "expo": "~53.0.0",
-    "react": "19.0.0",
-    "react-native": "0.79.4",
-    "@react-navigation/native": "^6.1.18",
-    "@react-navigation/stack": "^6.4.1",
-    "react-native-screens": "~4.11.1",
-    "react-native-safe-area-context": "5.4.0",
-    "react-native-gesture-handler": "~2.24.0",
-    "expo-haptics": "~14.1.4"
-  }
-}
-EOF
-)
-
-# Make API call to create Snack
-RESPONSE=$(curl -s -X POST https://snack.expo.dev/api/v2/snacks \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $EXPO_TOKEN" \
-  -d "$PAYLOAD")
-
-if [ $? -eq 0 ]; then
-  echo "✅ API call successful"
-  echo "Response: $RESPONSE"
-  
-  # Try to extract URL from response
-  SNACK_URL=$(echo "$RESPONSE" | grep -o '"url":"[^"]*"' | cut -d'"' -f4 | head -1)
-  if [ -n "$SNACK_URL" ]; then
-    echo "🔗 Snack URL: $SNACK_URL"
-    echo "$SNACK_URL" > /tmp/snack-url.txt
-  else
-    echo "⚠️ Snack created but URL not found in response"
-    echo "https://snack.expo.dev" > /tmp/snack-url.txt
-  fi
-else
-  echo "❌ Failed to create Snack"
-  exit 1
-fi
-CURL_SCRIPT
+          # Create API payload
+          curl -s -X POST https://snack.expo.dev/api/v2/snacks \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $EXPO_TOKEN" \
+            -d '{
+              "name": "8th Grader Quiz App",
+              "description": "Interactive quiz app for 8th grade students with civics, algebra, and science flashcards. Perfect for test prep!",
+              "sdkVersion": "53.0.0",
+              "dependencies": {
+                "expo": "~53.0.0",
+                "react": "19.0.0",
+                "react-native": "0.79.4",
+                "@react-navigation/native": "^6.1.18",
+                "@react-navigation/stack": "^6.4.1",
+                "react-native-screens": "~4.11.1",
+                "react-native-safe-area-context": "5.4.0",
+                "react-native-gesture-handler": "~2.24.0",
+                "expo-haptics": "~14.1.4"
+              }
+            }' > /tmp/snack-response.json
           
-          chmod +x publish-snack.sh
-          ./publish-snack.sh
+          # Check if API call was successful
+          if [ $? -eq 0 ] && [ -f /tmp/snack-response.json ]; then
+            echo "API call completed"
+            cat /tmp/snack-response.json
+            
+            # Try to extract URL from response
+            SNACK_URL=$(grep -o '"url":"[^"]*"' /tmp/snack-response.json | cut -d'"' -f4 | head -1)
+            if [ -n "$SNACK_URL" ]; then
+              echo "Snack URL found: $SNACK_URL"
+              echo "$SNACK_URL" > /tmp/snack-url.txt
+            else
+              echo "Snack created but URL not found in response"
+              echo "https://snack.expo.dev" > /tmp/snack-url.txt
+            fi
+          else
+            echo "Failed to create Snack"
+            echo "https://snack.expo.dev" > /tmp/snack-url.txt
+          fi
           
           # Get the Snack URL and add to summary
           if [ -f /tmp/snack-url.txt ]; then
