@@ -52,10 +52,10 @@ files[\`screens/\${file}\`] = fs.readFileSync(\`screens/\${file}\`, 'utf8');
 ❌ Error publishing Snack: SnackSession is not a constructor
 TypeError: SnackSession is not a constructor
 ```
-**Root Cause**: Incorrect destructuring import from `snack-sdk` package
-**Analysis**: The `snack-sdk` package may export differently than expected
-**Solution**: Changed from `const { SnackSession } = require('snack-sdk')` to more flexible import pattern
-**Status**: In progress - testing with debug logging to understand package structure
+**Root Cause**: Incorrect class name - package exports `Snack` not `SnackSession`
+**Analysis**: Debug output revealed available exports: `['getSupportedSDKVersions', 'isFeatureSupported', 'standardizeDependencies', 'getDeprecatedModule', 'defaultConfig', 'Snack', 'createRuntimeUrl', 'parseRuntimeUrl', 'ConnectionMetricsEmitter', 'createTransport', 'createTrafficMirroringTransport']`
+**Solution**: Use `Snack` class instead of `SnackSession`, and probe for available methods dynamically
+**Lesson**: Always check package exports when working with unfamiliar SDKs; API documentation may be outdated
 
 ## Technical Solutions Applied
 

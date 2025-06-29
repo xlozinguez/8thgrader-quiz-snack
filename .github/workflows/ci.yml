@@ -231,17 +231,17 @@ jobs:
         echo "📝 Creating Snack publishing script..."
         cat > publish-snack.js << 'SCRIPT_EOF'
         const SnackSDK = require('snack-sdk');
-        const SnackSession = SnackSDK.SnackSession || SnackSDK.default?.SnackSession || SnackSDK;
+        const Snack = SnackSDK.Snack;
         const fs = require('fs');
         const path = require('path');
         
         async function publishSnack() {
           try {
             console.log('🔍 Debug: SnackSDK =', typeof SnackSDK, Object.keys(SnackSDK || {}));
-            console.log('🔍 Debug: SnackSession =', typeof SnackSession);
+            console.log('🔍 Debug: Snack =', typeof Snack);
             console.log('🔗 Creating Snack session...');
             
-            const session = new SnackSession({
+            const session = new Snack({
               name: '8th Grader Quiz App',
               description: 'Interactive quiz app for 8th grade students with 460+ flashcards',
               sdkVersion: '53.0.0',
@@ -280,13 +280,37 @@ jobs:
             console.log('📄 Adding ' + Object.keys(files).length + ' files to Snack...');
             
             // Update session with files
-            await session.sendCodeAsync(files);
+            console.log('🔍 Available methods:', Object.getOwnPropertyNames(Object.getPrototypeOf(session)));
+            
+            // Try different method names based on snack-sdk API
+            if (typeof session.sendCodeAsync === 'function') {
+              await session.sendCodeAsync(files);
+            } else if (typeof session.updateFiles === 'function') {
+              await session.updateFiles(files);
+            } else if (typeof session.setFiles === 'function') {
+              session.setFiles(files);
+            }
             
             // Save the session (this creates/updates the Snack)
             console.log('💾 Saving Snack...');
-            const result = await session.saveAsync();
+            let result;
+            if (typeof session.saveAsync === 'function') {
+              result = await session.saveAsync();
+            } else if (typeof session.save === 'function') {
+              result = await session.save();
+            }
             
-            const snackUrl = 'https://snack.expo.dev/' + session.getSnackId();
+            // Get Snack URL - try different methods
+            let snackId;
+            if (typeof session.getSnackId === 'function') {
+              snackId = session.getSnackId();
+            } else if (session.id) {
+              snackId = session.id;
+            } else if (result && result.id) {
+              snackId = result.id;
+            }
+            
+            const snackUrl = 'https://snack.expo.dev/' + snackId;
             console.log('✅ Snack published successfully!');
             console.log('🔗 Snack URL: ' + snackUrl);
             
