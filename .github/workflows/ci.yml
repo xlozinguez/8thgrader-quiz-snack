@@ -233,25 +233,34 @@ jobs:
           # Create a simple Snack with core files using a different approach
           echo "Preparing Snack with essential files..."
           
-          # Use Node.js to create proper JSON payload
+          # Use Node.js to create proper Expo Snack API payload
           node -e "
             const fs = require('fs');
+            
+            // Read the app.json to get manifest info
+            const appJson = JSON.parse(fs.readFileSync('app.json', 'utf8'));
+            
             const payload = {
-              name: '8th Grader Quiz App',
-              description: 'Interactive quiz app for 8th grade students with civics, algebra, and science flashcards. Perfect for test prep!',
-              sdkVersion: '53.0.0',
-              dependencies: {
-                'expo': '~53.0.0',
-                'react': '19.0.0',
-                'react-native': '0.79.4',
-                '@react-navigation/native': '^6.1.18',
-                '@react-navigation/stack': '^6.4.1',
-                'react-native-screens': '~4.11.1',
-                'react-native-safe-area-context': '5.4.0',
-                'react-native-gesture-handler': '~2.24.0',
-                'expo-haptics': '~14.1.4'
+              manifest: {
+                name: '8th Grader Quiz App',
+                description: 'Interactive quiz app for 8th grade students with civics, algebra, and science flashcards. Perfect for test prep!',
+                slug: '8thgrader-quiz-snack',
+                version: '1.0.0',
+                sdkVersion: '53.0.0',
+                platforms: ['ios', 'android', 'web'],
+                dependencies: {
+                  'expo': '~53.0.0',
+                  'react': '19.0.0',
+                  'react-native': '0.79.4',
+                  '@react-navigation/native': '^6.1.18',
+                  '@react-navigation/stack': '^6.4.1',
+                  'react-native-screens': '~4.11.1',
+                  'react-native-safe-area-context': '5.4.0',
+                  'react-native-gesture-handler': '~2.24.0',
+                  'expo-haptics': '~14.1.4'
+                }
               },
-              files: {
+              code: {
                 'App.js': fs.readFileSync('App.js', 'utf8'),
                 'app.json': fs.readFileSync('app.json', 'utf8'),
                 'package.json': fs.readFileSync('package.json', 'utf8'),
@@ -263,7 +272,7 @@ jobs:
               }
             };
             fs.writeFileSync('/tmp/snack-payload.json', JSON.stringify(payload, null, 2));
-            console.log('Payload created with', Object.keys(payload.files).length, 'files');
+            console.log('Payload created with manifest and', Object.keys(payload.code).length, 'code files');
           "
           
           # Make API call to correct Expo Snack API endpoint
