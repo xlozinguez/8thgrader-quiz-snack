@@ -230,26 +230,70 @@ jobs:
           # Use direct curl approach to avoid YAML syntax issues
           echo "Publishing to Expo Snack API..."
           
-          # Create API payload
+          # Create payload with actual project files
+          echo "Preparing files for Snack..."
+          
+          # Create JSON payload with files
+          cat > /tmp/snack-payload.json << 'JSON_EOF'
+{
+  "name": "8th Grader Quiz App",
+  "description": "Interactive quiz app for 8th grade students with civics, algebra, and science flashcards. Perfect for test prep!",
+  "sdkVersion": "53.0.0",
+  "dependencies": {
+    "expo": "~53.0.0",
+    "react": "19.0.0",
+    "react-native": "0.79.4",
+    "@react-navigation/native": "^6.1.18",
+    "@react-navigation/stack": "^6.4.1",
+    "react-native-screens": "~4.11.1",
+    "react-native-safe-area-context": "5.4.0",
+    "react-native-gesture-handler": "~2.24.0",
+    "expo-haptics": "~14.1.4"
+  },
+  "files": {
+JSON_EOF
+
+          # Add files to payload
+          echo '    "App.js": ' >> /tmp/snack-payload.json
+          cat App.js | jq -R . >> /tmp/snack-payload.json
+          echo '    ,' >> /tmp/snack-payload.json
+          
+          echo '    "app.json": ' >> /tmp/snack-payload.json
+          cat app.json | jq -R -s . >> /tmp/snack-payload.json
+          echo '    ,' >> /tmp/snack-payload.json
+          
+          echo '    "package.json": ' >> /tmp/snack-payload.json
+          cat package.json | jq -R -s . >> /tmp/snack-payload.json
+          echo '    ,' >> /tmp/snack-payload.json
+          
+          echo '    "data/flashcards.js": ' >> /tmp/snack-payload.json
+          cat data/flashcards.js | jq -R -s . >> /tmp/snack-payload.json
+          echo '    ,' >> /tmp/snack-payload.json
+          
+          echo '    "screens/HomeScreen.js": ' >> /tmp/snack-payload.json
+          cat screens/HomeScreen.js | jq -R -s . >> /tmp/snack-payload.json
+          echo '    ,' >> /tmp/snack-payload.json
+          
+          echo '    "screens/SubjectScreen.js": ' >> /tmp/snack-payload.json
+          cat screens/SubjectScreen.js | jq -R -s . >> /tmp/snack-payload.json
+          echo '    ,' >> /tmp/snack-payload.json
+          
+          echo '    "screens/QuizScreen.js": ' >> /tmp/snack-payload.json
+          cat screens/QuizScreen.js | jq -R -s . >> /tmp/snack-payload.json
+          echo '    ,' >> /tmp/snack-payload.json
+          
+          echo '    "screens/ResultsScreen.js": ' >> /tmp/snack-payload.json
+          cat screens/ResultsScreen.js | jq -R -s . >> /tmp/snack-payload.json
+          
+          # Close the files object and JSON
+          echo '  }' >> /tmp/snack-payload.json
+          echo '}' >> /tmp/snack-payload.json
+          
+          # Make API call
           curl -s -X POST https://snack.expo.dev/api/v2/snacks \
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer $EXPO_TOKEN" \
-            -d '{
-              "name": "8th Grader Quiz App",
-              "description": "Interactive quiz app for 8th grade students with civics, algebra, and science flashcards. Perfect for test prep!",
-              "sdkVersion": "53.0.0",
-              "dependencies": {
-                "expo": "~53.0.0",
-                "react": "19.0.0",
-                "react-native": "0.79.4",
-                "@react-navigation/native": "^6.1.18",
-                "@react-navigation/stack": "^6.4.1",
-                "react-native-screens": "~4.11.1",
-                "react-native-safe-area-context": "5.4.0",
-                "react-native-gesture-handler": "~2.24.0",
-                "expo-haptics": "~14.1.4"
-              }
-            }' > /tmp/snack-response.json
+            -d @/tmp/snack-payload.json > /tmp/snack-response.json
           
           # Check if API call was successful
           if [ $? -eq 0 ] && [ -f /tmp/snack-response.json ]; then
