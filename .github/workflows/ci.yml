@@ -266,8 +266,9 @@ jobs:
             console.log('Payload created with', Object.keys(payload.files).length, 'files');
           "
           
-          # Make API call
-          curl -s -X POST https://snack.expo.dev/api/v2/snacks \
+          # Make API call to correct Expo Snack API endpoint
+          echo "Making API call to Expo Snack API..."
+          curl -s -w "HTTP Status: %{http_code}\n" -X POST https://exp.host/--/api/v2/snack/save \
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer $EXPO_TOKEN" \
             -d @/tmp/snack-payload.json > /tmp/snack-response.json
