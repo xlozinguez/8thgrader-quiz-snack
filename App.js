@@ -12,7 +12,7 @@ import ResultsScreen from './screens/ResultsScreen';
 
 const Stack = createStackNavigator();
 
-export default function App() {
+function App() {
   return (
     <NavigationContainer>
       <StatusBar style="light" backgroundColor="#2c3e50" />
@@ -60,4 +60,9 @@ export default function App() {
   );
 }
 
-// Removed unused styles
+// Export for both default and named exports (Snack compatibility)
+export default App;
+
+// Additional export pattern for Snack compatibility
+module.exports = App;
+module.exports.default = App;
