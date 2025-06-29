@@ -225,6 +225,102 @@ jobs:
         npm init -y
         npm install snack-sdk node-fetch --legacy-peer-deps
         
+    - name: Create Snack publishing script
+      run: |
+        cd snack-deploy
+        echo "📝 Creating Snack publishing script..."
+        cat > publish-snack.js << 'SCRIPT_EOF'
+        const { SnackSession } = require('snack-sdk');
+        const fs = require('fs');
+        const path = require('path');
+        
+        async function publishSnack() {
+          try {
+            console.log('🔗 Creating Snack session...');
+            
+            const session = new SnackSession({
+              name: '8th Grader Quiz App',
+              description: 'Interactive quiz app for 8th grade students with 460+ flashcards',
+              sdkVersion: '53.0.0',
+              dependencies: {
+                'expo': '^53.0.0',
+                'react': '19.0.0',
+                'react-native': '0.79.4',
+                '@expo/vector-icons': '^14.0.4',
+                '@react-navigation/native': '^6.1.18',
+                '@react-navigation/stack': '^6.4.1',
+                'react-native-screens': '~4.1.0',
+                'react-native-safe-area-context': '4.12.0',
+                'expo-haptics': '^13.0.1'
+              }
+            });
+            
+            // Read all files and add them to the session
+            const files = {};
+            
+            // Add main App.js
+            files['App.js'] = fs.readFileSync('App.js', 'utf8');
+            files['app.json'] = fs.readFileSync('app.json', 'utf8');
+            files['package.json'] = fs.readFileSync('package.json', 'utf8');
+            
+            // Add data files
+            files['data/flashcards.js'] = fs.readFileSync('data/flashcards.js', 'utf8');
+            
+            // Add screen files
+            const screenFiles = fs.readdirSync('screens');
+            for (const file of screenFiles) {
+              if (file.endsWith('.js')) {
+                files[\`screens/\${file}\`] = fs.readFileSync(\`screens/\${file}\`, 'utf8');
+              }
+            }
+            
+            console.log(\`📄 Adding \${Object.keys(files).length} files to Snack...\`);
+            
+            // Update session with files
+            await session.sendCodeAsync(files);
+            
+            // Save the session (this creates/updates the Snack)
+            console.log('💾 Saving Snack...');
+            const result = await session.saveAsync();
+            
+            const snackUrl = \`https://snack.expo.dev/\${session.getSnackId()}\`;
+            console.log(\`✅ Snack published successfully!\`);
+            console.log(\`🔗 Snack URL: \${snackUrl}\`);
+            
+            // Save URL for GitHub summary
+            fs.writeFileSync('/tmp/snack-url.txt', snackUrl);
+            
+            return snackUrl;
+          } catch (error) {
+            console.error('❌ Error publishing Snack:', error.message);
+            console.error('Error details:', error);
+            
+            // Final fallback: manual instructions
+            console.log('📝 Providing manual publishing instructions...');
+            const manualUrl = 'https://snack.expo.dev';
+            fs.writeFileSync('/tmp/snack-url.txt', manualUrl);
+            
+            console.log('');
+            console.log('⚠️ Automated publishing encountered issues. Manual steps:');
+            console.log('1. Visit https://snack.expo.dev');
+            console.log('2. Create a new Snack');
+            console.log('3. Copy the files from this deployment package');
+            console.log('4. Update the dependencies in package.json');
+            console.log('');
+            
+            return manualUrl;
+          }
+        }
+        
+        publishSnack().then(url => {
+          console.log(\`🎉 Final Snack URL: \${url}\`);
+          process.exit(0);
+        }).catch(err => {
+          console.error('💥 Fatal error:', err);
+          process.exit(1);
+        });
+        SCRIPT_EOF
+        
     - name: Publish to Expo Snack via API
       run: |
         cd snack-deploy
@@ -233,120 +329,6 @@ jobs:
         if [ -n "${{ secrets.EXPO_TOKEN }}" ]; then
           echo "🚀 Publishing Snack to Expo..."
           export EXPO_TOKEN="${{ secrets.EXPO_TOKEN }}"
-          
-          # Create Snack publishing script
-          cat > publish-snack.js << 'EOF'
-          const { SnackSession } = require('snack-sdk');
-          const fs = require('fs');
-          const path = require('path');
-          
-          async function publishSnack() {
-            try {
-              console.log('🔗 Creating Snack session...');
-              
-              const session = new SnackSession({
-                name: '8th Grader Quiz App',
-                description: 'Interactive quiz app for 8th grade students with 460+ flashcards',
-                sdkVersion: '53.0.0',
-                dependencies: {
-                  'expo': '^53.0.0',
-                  'react': '19.0.0',
-                  'react-native': '0.79.4',
-                  '@expo/vector-icons': '^14.0.4',
-                  '@react-navigation/native': '^6.1.18',
-                  '@react-navigation/stack': '^6.4.1',
-                  'react-native-screens': '~4.1.0',
-                  'react-native-safe-area-context': '4.12.0',
-                  'expo-haptics': '^13.0.1'
-                }
-              });
-              
-              // Read all files and add them to the session
-              const files = {};
-              
-              // Add main App.js
-              files['App.js'] = fs.readFileSync('App.js', 'utf8');
-              files['app.json'] = fs.readFileSync('app.json', 'utf8');
-              files['package.json'] = fs.readFileSync('package.json', 'utf8');
-              
-              // Add data files
-              files['data/flashcards.js'] = fs.readFileSync('data/flashcards.js', 'utf8');
-              
-              // Add screen files
-              const screenFiles = fs.readdirSync('screens');
-              for (const file of screenFiles) {
-                if (file.endsWith('.js')) {
-                  files[`screens/${file}`] = fs.readFileSync(`screens/${file}`, 'utf8');
-                }
-              }
-              
-              console.log(`📄 Adding ${Object.keys(files).length} files to Snack...`);
-              
-              // Update session with files
-              await session.sendCodeAsync(files);
-              
-              // Save the session (this creates/updates the Snack)
-              console.log('💾 Saving Snack...');
-              const result = await session.saveAsync();
-              
-              const snackUrl = `https://snack.expo.dev/${session.getSnackId()}`;
-              console.log(`✅ Snack published successfully!`);
-              console.log(`🔗 Snack URL: ${snackUrl}`);
-              
-              // Save URL for GitHub summary
-              fs.writeFileSync('/tmp/snack-url.txt', snackUrl);
-              
-              return snackUrl;
-            } catch (error) {
-              console.error('❌ Error publishing Snack:', error.message);
-              
-              // Fallback: Try using Expo CLI publish
-              console.log('🔄 Trying fallback: Expo CLI publish...');
-              const { execSync } = require('child_process');
-              
-              try {
-                // Login with token
-                execSync(`echo "${process.env.EXPO_TOKEN}" | npx expo login --non-interactive`, { stdio: 'inherit' });
-                
-                // Try to publish as Snack
-                const result = execSync('npx expo publish --non-interactive', { encoding: 'utf8' });
-                console.log('✅ Fallback publish successful:', result);
-                
-                // Extract URL from result if possible
-                const urlMatch = result.match(/https:\/\/expo\.dev\/[^\s]+/);
-                if (urlMatch) {
-                  fs.writeFileSync('/tmp/snack-url.txt', urlMatch[0]);
-                  return urlMatch[0];
-                }
-              } catch (fallbackError) {
-                console.error('❌ Fallback also failed:', fallbackError.message);
-              }
-              
-              // Final fallback: manual instructions
-              console.log('📝 Providing manual publishing instructions...');
-              const manualUrl = 'https://snack.expo.dev';
-              fs.writeFileSync('/tmp/snack-url.txt', manualUrl);
-              
-              console.log('');
-              console.log('⚠️ Automated publishing encountered issues. Manual steps:');
-              console.log('1. Visit https://snack.expo.dev');
-              console.log('2. Create a new Snack');
-              console.log('3. Copy the files from this deployment package');
-              console.log('4. Update the dependencies in package.json');
-              console.log('');
-              
-              return manualUrl;
-            }
-          }
-          
-          publishSnack().then(url => {
-            console.log(`🎉 Final Snack URL: ${url}`);
-            process.exit(0);
-          }).catch(err => {
-            console.error('💥 Fatal error:', err);
-            process.exit(1);
-          });
-          EOF
           
           # Run the publishing script
           node publish-snack.js
