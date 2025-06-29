@@ -230,64 +230,41 @@ jobs:
           # Use direct curl approach to avoid YAML syntax issues
           echo "Publishing to Expo Snack API..."
           
-          # Create payload with actual project files
-          echo "Preparing files for Snack..."
+          # Create a simple Snack with core files using a different approach
+          echo "Preparing Snack with essential files..."
           
-          # Create JSON payload with files
-          cat > /tmp/snack-payload.json << 'JSON_EOF'
-{
-  "name": "8th Grader Quiz App",
-  "description": "Interactive quiz app for 8th grade students with civics, algebra, and science flashcards. Perfect for test prep!",
-  "sdkVersion": "53.0.0",
-  "dependencies": {
-    "expo": "~53.0.0",
-    "react": "19.0.0",
-    "react-native": "0.79.4",
-    "@react-navigation/native": "^6.1.18",
-    "@react-navigation/stack": "^6.4.1",
-    "react-native-screens": "~4.11.1",
-    "react-native-safe-area-context": "5.4.0",
-    "react-native-gesture-handler": "~2.24.0",
-    "expo-haptics": "~14.1.4"
-  },
-  "files": {
-JSON_EOF
-
-          # Add files to payload
-          echo '    "App.js": ' >> /tmp/snack-payload.json
-          cat App.js | jq -R . >> /tmp/snack-payload.json
-          echo '    ,' >> /tmp/snack-payload.json
-          
-          echo '    "app.json": ' >> /tmp/snack-payload.json
-          cat app.json | jq -R -s . >> /tmp/snack-payload.json
-          echo '    ,' >> /tmp/snack-payload.json
-          
-          echo '    "package.json": ' >> /tmp/snack-payload.json
-          cat package.json | jq -R -s . >> /tmp/snack-payload.json
-          echo '    ,' >> /tmp/snack-payload.json
-          
-          echo '    "data/flashcards.js": ' >> /tmp/snack-payload.json
-          cat data/flashcards.js | jq -R -s . >> /tmp/snack-payload.json
-          echo '    ,' >> /tmp/snack-payload.json
-          
-          echo '    "screens/HomeScreen.js": ' >> /tmp/snack-payload.json
-          cat screens/HomeScreen.js | jq -R -s . >> /tmp/snack-payload.json
-          echo '    ,' >> /tmp/snack-payload.json
-          
-          echo '    "screens/SubjectScreen.js": ' >> /tmp/snack-payload.json
-          cat screens/SubjectScreen.js | jq -R -s . >> /tmp/snack-payload.json
-          echo '    ,' >> /tmp/snack-payload.json
-          
-          echo '    "screens/QuizScreen.js": ' >> /tmp/snack-payload.json
-          cat screens/QuizScreen.js | jq -R -s . >> /tmp/snack-payload.json
-          echo '    ,' >> /tmp/snack-payload.json
-          
-          echo '    "screens/ResultsScreen.js": ' >> /tmp/snack-payload.json
-          cat screens/ResultsScreen.js | jq -R -s . >> /tmp/snack-payload.json
-          
-          # Close the files object and JSON
-          echo '  }' >> /tmp/snack-payload.json
-          echo '}' >> /tmp/snack-payload.json
+          # Use Node.js to create proper JSON payload
+          node -e "
+            const fs = require('fs');
+            const payload = {
+              name: '8th Grader Quiz App',
+              description: 'Interactive quiz app for 8th grade students with civics, algebra, and science flashcards. Perfect for test prep!',
+              sdkVersion: '53.0.0',
+              dependencies: {
+                'expo': '~53.0.0',
+                'react': '19.0.0',
+                'react-native': '0.79.4',
+                '@react-navigation/native': '^6.1.18',
+                '@react-navigation/stack': '^6.4.1',
+                'react-native-screens': '~4.11.1',
+                'react-native-safe-area-context': '5.4.0',
+                'react-native-gesture-handler': '~2.24.0',
+                'expo-haptics': '~14.1.4'
+              },
+              files: {
+                'App.js': fs.readFileSync('App.js', 'utf8'),
+                'app.json': fs.readFileSync('app.json', 'utf8'),
+                'package.json': fs.readFileSync('package.json', 'utf8'),
+                'data/flashcards.js': fs.readFileSync('data/flashcards.js', 'utf8'),
+                'screens/HomeScreen.js': fs.readFileSync('screens/HomeScreen.js', 'utf8'),
+                'screens/SubjectScreen.js': fs.readFileSync('screens/SubjectScreen.js', 'utf8'),
+                'screens/QuizScreen.js': fs.readFileSync('screens/QuizScreen.js', 'utf8'),
+                'screens/ResultsScreen.js': fs.readFileSync('screens/ResultsScreen.js', 'utf8')
+              }
+            };
+            fs.writeFileSync('/tmp/snack-payload.json', JSON.stringify(payload, null, 2));
+            console.log('Payload created with', Object.keys(payload.files).length, 'files');
+          "
           
           # Make API call
           curl -s -X POST https://snack.expo.dev/api/v2/snacks \
