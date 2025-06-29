@@ -247,18 +247,18 @@ jobs:
                 slug: '8thgrader-quiz-snack',
                 version: '1.0.0',
                 sdkVersion: '53.0.0',
-                platforms: ['ios', 'android', 'web'],
-                dependencies: {
-                  'expo': '~53.0.0',
-                  'react': '19.0.0',
-                  'react-native': '0.79.4',
-                  '@react-navigation/native': '^6.1.18',
-                  '@react-navigation/stack': '^6.4.1',
-                  'react-native-screens': '~4.11.1',
-                  'react-native-safe-area-context': '5.4.0',
-                  'react-native-gesture-handler': '~2.24.0',
-                  'expo-haptics': '~14.1.4'
-                }
+                platforms: ['ios', 'android', 'web']
+              },
+              dependencies: {
+                'expo': '~53.0.0',
+                'react': '19.0.0',
+                'react-native': '0.79.4',
+                '@react-navigation/native': '^6.1.18',
+                '@react-navigation/stack': '^6.4.1',
+                'react-native-screens': '~4.11.1',
+                'react-native-safe-area-context': '5.4.0',
+                'react-native-gesture-handler': '~2.24.0',
+                'expo-haptics': '~14.1.4'
               },
               code: {
                 'App.js': fs.readFileSync('App.js', 'utf8'),
