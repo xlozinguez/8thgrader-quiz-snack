@@ -46,6 +46,17 @@ files[\`screens/\${file}\`] = fs.readFileSync(\`screens/\${file}\`, 'utf8');
 **Solution**: Replaced template literals with string concatenation (`'screens/' + file`)
 **Lesson**: Template literals don't work well inside YAML heredocs; use string concatenation instead
 
+### Attempt 5: SnackSession Import Issues
+**Problem**: 
+```
+❌ Error publishing Snack: SnackSession is not a constructor
+TypeError: SnackSession is not a constructor
+```
+**Root Cause**: Incorrect destructuring import from `snack-sdk` package
+**Analysis**: The `snack-sdk` package may export differently than expected
+**Solution**: Changed from `const { SnackSession } = require('snack-sdk')` to more flexible import pattern
+**Status**: In progress - testing with debug logging to understand package structure
+
 ## Technical Solutions Applied
 
 ### 1. Dependency Management

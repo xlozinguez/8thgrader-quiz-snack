@@ -230,12 +230,15 @@ jobs:
         cd snack-deploy
         echo "📝 Creating Snack publishing script..."
         cat > publish-snack.js << 'SCRIPT_EOF'
-        const { SnackSession } = require('snack-sdk');
+        const SnackSDK = require('snack-sdk');
+        const SnackSession = SnackSDK.SnackSession || SnackSDK.default?.SnackSession || SnackSDK;
         const fs = require('fs');
         const path = require('path');
         
         async function publishSnack() {
           try {
+            console.log('🔍 Debug: SnackSDK =', typeof SnackSDK, Object.keys(SnackSDK || {}));
+            console.log('🔍 Debug: SnackSession =', typeof SnackSession);
             console.log('🔗 Creating Snack session...');
             
             const session = new SnackSession({
