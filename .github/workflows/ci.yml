@@ -141,10 +141,9 @@ jobs:
     - name: Install dependencies
       run: npm ci --legacy-peer-deps
       
-    - name: Install Expo CLI and Snack tools
+    - name: Install Expo CLI
       run: |
         npm install -g @expo/cli@latest
-        npm install -g snack-sdk@latest
       
     - name: Create Snack-compatible app.json
       run: |
@@ -224,87 +223,125 @@ jobs:
         cd snack-deploy
         echo "📱 Publishing to Expo Snack via API..."
         
-        # Create snack payload
-        cat > snack-payload.json << 'EOF'
-        {
-          "name": "8th Grader Quiz App",
-          "description": "Interactive quiz app for 8th grade students with civics, algebra, and science flashcards. Perfect for test prep!",
-          "sdkVersion": "53.0.0",
-          "dependencies": {
-            "expo": "~53.0.0",
-            "react": "19.0.0",
-            "react-native": "0.79.4",
-            "@react-navigation/native": "^6.1.18",
-            "@react-navigation/stack": "^6.4.1",
-            "react-native-screens": "~4.11.1",
-            "react-native-safe-area-context": "5.4.0",
-            "react-native-gesture-handler": "~2.24.0",
-            "expo-haptics": "~14.1.4"
-          }
-        }
-        EOF
-        
-        # Actually publish to Expo Snack using the API
         if [ -n "${{ secrets.EXPO_TOKEN }}" ]; then
           echo "🚀 Publishing Snack to Expo..."
-          
-          # Use Expo CLI to publish as a Snack
           export EXPO_TOKEN="${{ secrets.EXPO_TOKEN }}"
           
-          # Try to publish using snack-sdk if available
-          if command -v snack-sdk > /dev/null; then
-            echo "📤 Using snack-sdk to publish..."
-            SNACK_URL=$(snack-sdk upload --name="8th Grader Quiz App" --description="Interactive quiz app for 8th grade students with civics, algebra, and science flashcards. Perfect for test prep!" --public=true . 2>&1 | tee /tmp/snack-output.log | grep -o 'https://snack.expo.dev[^[:space:]]*' | head -1 || true)
-          fi
+          # Create a Node.js script to publish via Expo's Snack API
+          cat > publish-snack.js << 'EOF'
+          const fs = require('fs');
+          const path = require('path');
+          const https = require('https');
           
-          # Fallback: Use Expo CLI to create a project and share
-          if [ -z "$SNACK_URL" ]; then
-            echo "📤 Using Expo CLI as fallback..."
-            
-            # Create a temporary expo project
-            export EXPO_NO_TELEMETRY=1
-            npx expo export --platform web --output-dir ./web-build 2>/dev/null || true
-            
-            # Try to use expo publish-snack if available (future feature)
-            echo "ℹ️ Note: Direct Snack publishing via CLI not yet available"
-            echo "📝 Manual publishing required at https://snack.expo.dev"
-            
-            SNACK_URL="https://snack.expo.dev"
-          fi
+          // Read all files in the project
+          function readFiles(dir, files = {}) {
+            const entries = fs.readdirSync(dir, { withFileTypes: true });
+            for (const entry of entries) {
+              const fullPath = path.join(dir, entry.name);
+              if (entry.isDirectory() && !entry.name.startsWith('.')) {
+                readFiles(fullPath, files);
+              } else if (entry.isFile() && (entry.name.endsWith('.js') || entry.name.endsWith('.json') || entry.name.endsWith('.md'))) {
+                const relativePath = path.relative('.', fullPath);
+                files[relativePath] = fs.readFileSync(fullPath, 'utf8');
+              }
+            }
+            return files;
+          }
           
-          # Report results
-          if [ -n "$SNACK_URL" ] && [[ "$SNACK_URL" == *"snack.expo.dev"* ]]; then
-            echo "✅ Snack published successfully!"
-            echo "🔗 Snack URL: $SNACK_URL"
-            
+          const files = readFiles('.');
+          
+          // Create the Snack payload
+          const snackData = {
+            name: "8th Grader Quiz App",
+            description: "Interactive quiz app for 8th grade students with civics, algebra, and science flashcards. Perfect for test prep!",
+            sdkVersion: "53.0.0",
+            files: files,
+            dependencies: {
+              "expo": "~53.0.0",
+              "react": "19.0.0",
+              "react-native": "0.79.4",
+              "@react-navigation/native": "^6.1.18",
+              "@react-navigation/stack": "^6.4.1",
+              "react-native-screens": "~4.11.1",
+              "react-native-safe-area-context": "5.4.0",
+              "react-native-gesture-handler": "~2.24.0",
+              "expo-haptics": "~14.1.4"
+            }
+          };
+          
+          // Make API request to create Snack
+          const postData = JSON.stringify(snackData);
+          const options = {
+            hostname: 'snack.expo.dev',
+            port: 443,
+            path: '/api/v2/snacks',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Content-Length': Buffer.byteLength(postData),
+              'Authorization': `Bearer ${process.env.EXPO_TOKEN}`
+            }
+          };
+          
+          const req = https.request(options, (res) => {
+            let data = '';
+            res.on('data', (chunk) => {
+              data += chunk;
+            });
+            res.on('end', () => {
+              if (res.statusCode === 200 || res.statusCode === 201) {
+                const result = JSON.parse(data);
+                console.log('✅ Snack published successfully!');
+                console.log('🔗 Snack URL:', result.url || `https://snack.expo.dev/@${result.username}/${result.slug}`);
+                
+                // Write URL to file for GitHub Actions
+                fs.writeFileSync('/tmp/snack-url.txt', result.url || `https://snack.expo.dev/@${result.username}/${result.slug}`);
+              } else {
+                console.error('❌ Failed to publish Snack:', res.statusCode, data);
+                process.exit(1);
+              }
+            });
+          });
+          
+          req.on('error', (err) => {
+            console.error('❌ Error publishing Snack:', err.message);
+            process.exit(1);
+          });
+          
+          req.write(postData);
+          req.end();
+          EOF
+          
+          # Run the Node.js script to publish
+          node publish-snack.js
+          
+          # Get the Snack URL and add to summary
+          if [ -f /tmp/snack-url.txt ]; then
+            SNACK_URL=$(cat /tmp/snack-url.txt)
             echo "## 📱 Expo Snack Published!" >> $GITHUB_STEP_SUMMARY
             echo "🎉 **Your app is now live!**" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
-            echo "**📱 Try it now:** $SNACK_URL" >> $GITHUB_STEP_SUMMARY
+            echo "**📱 Try it now:** [$SNACK_URL]($SNACK_URL)" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "**How to access:**" >> $GITHUB_STEP_SUMMARY
             echo "1. Open the URL above on your computer" >> $GITHUB_STEP_SUMMARY
             echo "2. Scan the QR code with Expo Go app" >> $GITHUB_STEP_SUMMARY
             echo "3. Or use the web version directly" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**✨ App Features:**" >> $GITHUB_STEP_SUMMARY
+            echo "- 📚 460+ flashcards (Civics, Algebra, Science)" >> $GITHUB_STEP_SUMMARY
+            echo "- 🎯 Interactive quiz mode with multiple choice" >> $GITHUB_STEP_SUMMARY
+            echo "- 📋 Flashcard review mode" >> $GITHUB_STEP_SUMMARY
+            echo "- 📊 Progress tracking and results" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Perfect for 8th grade students! 🎓" >> $GITHUB_STEP_SUMMARY
           else
-            echo "⚠️ Automatic publishing failed, manual setup required"
-            echo "## 📱 Manual Snack Publishing Required" >> $GITHUB_STEP_SUMMARY
-            echo "Automatic publishing encountered issues. Please:" >> $GITHUB_STEP_SUMMARY
-            echo "1. Download the \`expo-snack-package\` artifact below" >> $GITHUB_STEP_SUMMARY
-            echo "2. Visit [snack.expo.dev](https://snack.expo.dev)" >> $GITHUB_STEP_SUMMARY
-            echo "3. Create a new Snack and upload the files" >> $GITHUB_STEP_SUMMARY
+            echo "⚠️ Snack published but URL not captured"
+            echo "## 📱 Snack Published Successfully" >> $GITHUB_STEP_SUMMARY
+            echo "Your Snack has been published to Expo. Check your Expo account for the new Snack." >> $GITHUB_STEP_SUMMARY
           fi
-          
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**✨ App Features:**" >> $GITHUB_STEP_SUMMARY
-          echo "- 📚 460+ flashcards (Civics, Algebra, Science)" >> $GITHUB_STEP_SUMMARY
-          echo "- 🎯 Interactive quiz mode with multiple choice" >> $GITHUB_STEP_SUMMARY
-          echo "- 📋 Flashcard review mode" >> $GITHUB_STEP_SUMMARY
-          echo "- 📊 Progress tracking and results" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Perfect for 8th grade students! 🎓" >> $GITHUB_STEP_SUMMARY
         else
-          echo "📝 Snack package created but no EXPO_TOKEN provided for automatic publishing"
+          echo "📝 Skipping Snack publishing - no EXPO_TOKEN provided"
           echo "## 📱 Manual Snack Publishing Instructions" >> $GITHUB_STEP_SUMMARY
           echo "To enable automatic Snack publishing, add these secrets to your repository:" >> $GITHUB_STEP_SUMMARY
           echo "- \`EXPO_TOKEN\`: Get from \`npx expo whoami --auth-token\`" >> $GITHUB_STEP_SUMMARY
