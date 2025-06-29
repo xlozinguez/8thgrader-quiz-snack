@@ -8,7 +8,7 @@ import {
   ScrollView,
   Dimensions
 } from 'react-native';
-import { flashcardsData } from '../data/flashcards';
+import { flashcardsData } from '../data/flashcards.js';
 
 const { width } = Dimensions.get('window');
 

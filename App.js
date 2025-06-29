@@ -4,11 +4,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
 
-// Import screens
-import HomeScreen from './screens/HomeScreen';
-import SubjectScreen from './screens/SubjectScreen';
-import QuizScreen from './screens/QuizScreen';
-import ResultsScreen from './screens/ResultsScreen';
+// Import screens (Snack compatibility)
+import HomeScreen from './screens/HomeScreen.js';
+import SubjectScreen from './screens/SubjectScreen.js';
+import QuizScreen from './screens/QuizScreen.js';
+import ResultsScreen from './screens/ResultsScreen.js';
 
 const Stack = createStackNavigator();
 
