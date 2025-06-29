@@ -272,22 +272,38 @@ jobs:
             -H "Authorization: Bearer $EXPO_TOKEN" \
             -d @/tmp/snack-payload.json > /tmp/snack-response.json
           
-          # Check if API call was successful
+          # Check if API call was successful and debug response
           if [ $? -eq 0 ] && [ -f /tmp/snack-response.json ]; then
-            echo "API call completed"
+            echo "API call completed successfully"
+            echo "Response content:"
             cat /tmp/snack-response.json
+            echo ""
+            echo "Response size: $(wc -c < /tmp/snack-response.json) bytes"
             
-            # Try to extract URL from response
-            SNACK_URL=$(grep -o '"url":"[^"]*"' /tmp/snack-response.json | cut -d'"' -f4 | head -1)
-            if [ -n "$SNACK_URL" ]; then
-              echo "Snack URL found: $SNACK_URL"
+            # Check for common API error responses
+            if grep -q '"error"' /tmp/snack-response.json; then
+              echo "ERROR: API returned an error response"
+              ERROR_MSG=$(grep -o '"message":"[^"]*"' /tmp/snack-response.json | cut -d'"' -f4 || echo "Unknown error")
+              echo "Error message: $ERROR_MSG"
+              echo "https://snack.expo.dev" > /tmp/snack-url.txt
+            elif grep -q '"url"' /tmp/snack-response.json; then
+              # Try to extract URL from response
+              SNACK_URL=$(grep -o '"url":"[^"]*"' /tmp/snack-response.json | cut -d'"' -f4 | head -1)
+              echo "Success! Snack URL found: $SNACK_URL"
               echo "$SNACK_URL" > /tmp/snack-url.txt
+            elif grep -q '"id"' /tmp/snack-response.json; then
+              # Try to construct URL from ID if direct URL not available
+              SNACK_ID=$(grep -o '"id":"[^"]*"' /tmp/snack-response.json | cut -d'"' -f4 | head -1)
+              echo "Snack ID found: $SNACK_ID"
+              echo "https://snack.expo.dev/@xlozingueztfx/$SNACK_ID" > /tmp/snack-url.txt
             else
-              echo "Snack created but URL not found in response"
+              echo "WARNING: Unexpected API response format"
+              echo "Response does not contain expected 'url' or 'id' field"
               echo "https://snack.expo.dev" > /tmp/snack-url.txt
             fi
           else
-            echo "Failed to create Snack"
+            echo "ERROR: API call failed or no response file"
+            echo "Curl exit code: $?"
             echo "https://snack.expo.dev" > /tmp/snack-url.txt
           fi
           
