@@ -64,7 +64,7 @@ jobs:
       
     - name: Check Expo compatibility
       run: |
-        npx expo install --fix --dry-run
+        npx expo install --check
         echo "✅ Expo package compatibility check passed"
         
     - name: Validate package.json
@@ -91,10 +91,13 @@ jobs:
       with:
         node-version: '18.x'
         
+    - name: Create package.json with type module
+      run: echo '{"type":"module"}' > package-ci.json
+      
     - name: Validate flashcard data
       run: |
-        node -e "
-          const { flashcardsData } = require('./data/flashcards.js');
+        node --input-type=module -e "
+          import { flashcardsData } from './data/flashcards.js';
           
           // Count total cards
           let totalCards = 0;
