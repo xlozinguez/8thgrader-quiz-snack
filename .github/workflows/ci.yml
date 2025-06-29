@@ -218,6 +218,13 @@ jobs:
         cd snack-deploy
         echo "✅ Snack package ready with $(find . -name "*.js" | wc -l) JS files"
         
+    - name: Install snack-sdk and dependencies
+      run: |
+        cd snack-deploy
+        echo "📦 Installing Snack SDK..."
+        npm init -y
+        npm install snack-sdk node-fetch
+        
     - name: Publish to Expo Snack via API
       run: |
         cd snack-deploy
@@ -227,95 +234,122 @@ jobs:
           echo "🚀 Publishing Snack to Expo..."
           export EXPO_TOKEN="${{ secrets.EXPO_TOKEN }}"
           
-          # Use direct curl approach to avoid YAML syntax issues
-          echo "Publishing to Expo Snack API..."
+          # Create Snack publishing script
+          cat > publish-snack.js << 'EOF'
+          const { SnackSession } = require('snack-sdk');
+          const fs = require('fs');
+          const path = require('path');
           
-          # Create a simple Snack with core files using a different approach
-          echo "Preparing Snack with essential files..."
-          
-          # Use Node.js to create proper Expo Snack API payload
-          node -e "
-            const fs = require('fs');
-            
-            // Read the app.json to get manifest info
-            const appJson = JSON.parse(fs.readFileSync('app.json', 'utf8'));
-            
-            const payload = {
-              manifest: {
+          async function publishSnack() {
+            try {
+              console.log('🔗 Creating Snack session...');
+              
+              const session = new SnackSession({
                 name: '8th Grader Quiz App',
-                description: 'Interactive quiz app for 8th grade students with civics, algebra, and science flashcards. Perfect for test prep!',
-                slug: '8thgrader-quiz-snack',
-                version: '1.0.0',
+                description: 'Interactive quiz app for 8th grade students with 460+ flashcards',
                 sdkVersion: '53.0.0',
-                platforms: ['ios', 'android', 'web']
-              },
-              dependencies: {
-                'expo': '~53.0.0',
-                'react': '19.0.0',
-                'react-native': '0.79.4',
-                '@react-navigation/native': '^6.1.18',
-                '@react-navigation/stack': '^6.4.1',
-                'react-native-screens': '~4.11.1',
-                'react-native-safe-area-context': '5.4.0',
-                'react-native-gesture-handler': '~2.24.0',
-                'expo-haptics': '~14.1.4'
-              },
-              code: {
-                'App.js': fs.readFileSync('App.js', 'utf8'),
-                'app.json': fs.readFileSync('app.json', 'utf8'),
-                'package.json': fs.readFileSync('package.json', 'utf8'),
-                'data/flashcards.js': fs.readFileSync('data/flashcards.js', 'utf8'),
-                'screens/HomeScreen.js': fs.readFileSync('screens/HomeScreen.js', 'utf8'),
-                'screens/SubjectScreen.js': fs.readFileSync('screens/SubjectScreen.js', 'utf8'),
-                'screens/QuizScreen.js': fs.readFileSync('screens/QuizScreen.js', 'utf8'),
-                'screens/ResultsScreen.js': fs.readFileSync('screens/ResultsScreen.js', 'utf8')
+                dependencies: {
+                  'expo': '^53.0.0',
+                  'react': '19.0.0',
+                  'react-native': '0.79.4',
+                  '@expo/vector-icons': '^14.0.4',
+                  '@react-navigation/native': '^6.1.18',
+                  '@react-navigation/stack': '^6.4.1',
+                  'react-native-screens': '~4.1.0',
+                  'react-native-safe-area-context': '4.12.0',
+                  'expo-haptics': '^13.0.1'
+                }
+              });
+              
+              // Read all files and add them to the session
+              const files = {};
+              
+              // Add main App.js
+              files['App.js'] = fs.readFileSync('App.js', 'utf8');
+              files['app.json'] = fs.readFileSync('app.json', 'utf8');
+              files['package.json'] = fs.readFileSync('package.json', 'utf8');
+              
+              // Add data files
+              files['data/flashcards.js'] = fs.readFileSync('data/flashcards.js', 'utf8');
+              
+              // Add screen files
+              const screenFiles = fs.readdirSync('screens');
+              for (const file of screenFiles) {
+                if (file.endsWith('.js')) {
+                  files[`screens/${file}`] = fs.readFileSync(`screens/${file}`, 'utf8');
+                }
               }
-            };
-            fs.writeFileSync('/tmp/snack-payload.json', JSON.stringify(payload, null, 2));
-            console.log('Payload created with manifest and', Object.keys(payload.code).length, 'code files');
-          "
+              
+              console.log(`📄 Adding ${Object.keys(files).length} files to Snack...`);
+              
+              // Update session with files
+              await session.sendCodeAsync(files);
+              
+              // Save the session (this creates/updates the Snack)
+              console.log('💾 Saving Snack...');
+              const result = await session.saveAsync();
+              
+              const snackUrl = `https://snack.expo.dev/${session.getSnackId()}`;
+              console.log(`✅ Snack published successfully!`);
+              console.log(`🔗 Snack URL: ${snackUrl}`);
+              
+              // Save URL for GitHub summary
+              fs.writeFileSync('/tmp/snack-url.txt', snackUrl);
+              
+              return snackUrl;
+            } catch (error) {
+              console.error('❌ Error publishing Snack:', error.message);
+              
+              // Fallback: Try using Expo CLI publish
+              console.log('🔄 Trying fallback: Expo CLI publish...');
+              const { execSync } = require('child_process');
+              
+              try {
+                // Login with token
+                execSync(`echo "${process.env.EXPO_TOKEN}" | npx expo login --non-interactive`, { stdio: 'inherit' });
+                
+                // Try to publish as Snack
+                const result = execSync('npx expo publish --non-interactive', { encoding: 'utf8' });
+                console.log('✅ Fallback publish successful:', result);
+                
+                // Extract URL from result if possible
+                const urlMatch = result.match(/https:\/\/expo\.dev\/[^\s]+/);
+                if (urlMatch) {
+                  fs.writeFileSync('/tmp/snack-url.txt', urlMatch[0]);
+                  return urlMatch[0];
+                }
+              } catch (fallbackError) {
+                console.error('❌ Fallback also failed:', fallbackError.message);
+              }
+              
+              // Final fallback: manual instructions
+              console.log('📝 Providing manual publishing instructions...');
+              const manualUrl = 'https://snack.expo.dev';
+              fs.writeFileSync('/tmp/snack-url.txt', manualUrl);
+              
+              console.log('');
+              console.log('⚠️ Automated publishing encountered issues. Manual steps:');
+              console.log('1. Visit https://snack.expo.dev');
+              console.log('2. Create a new Snack');
+              console.log('3. Copy the files from this deployment package');
+              console.log('4. Update the dependencies in package.json');
+              console.log('');
+              
+              return manualUrl;
+            }
+          }
           
-          # Make API call to correct Expo Snack API endpoint
-          echo "Making API call to Expo Snack API..."
-          curl -s -w "HTTP Status: %{http_code}\n" -X POST https://exp.host/--/api/v2/snack/save \
-            -H "Content-Type: application/json" \
-            -H "Authorization: Bearer $EXPO_TOKEN" \
-            -d @/tmp/snack-payload.json > /tmp/snack-response.json
+          publishSnack().then(url => {
+            console.log(`🎉 Final Snack URL: ${url}`);
+            process.exit(0);
+          }).catch(err => {
+            console.error('💥 Fatal error:', err);
+            process.exit(1);
+          });
+          EOF
           
-          # Check if API call was successful and debug response
-          if [ $? -eq 0 ] && [ -f /tmp/snack-response.json ]; then
-            echo "API call completed successfully"
-            echo "Response content:"
-            cat /tmp/snack-response.json
-            echo ""
-            echo "Response size: $(wc -c < /tmp/snack-response.json) bytes"
-            
-            # Check for common API error responses
-            if grep -q '"error"' /tmp/snack-response.json; then
-              echo "ERROR: API returned an error response"
-              ERROR_MSG=$(grep -o '"message":"[^"]*"' /tmp/snack-response.json | cut -d'"' -f4 || echo "Unknown error")
-              echo "Error message: $ERROR_MSG"
-              echo "https://snack.expo.dev" > /tmp/snack-url.txt
-            elif grep -q '"url"' /tmp/snack-response.json; then
-              # Try to extract URL from response
-              SNACK_URL=$(grep -o '"url":"[^"]*"' /tmp/snack-response.json | cut -d'"' -f4 | head -1)
-              echo "Success! Snack URL found: $SNACK_URL"
-              echo "$SNACK_URL" > /tmp/snack-url.txt
-            elif grep -q '"id"' /tmp/snack-response.json; then
-              # Try to construct URL from ID if direct URL not available
-              SNACK_ID=$(grep -o '"id":"[^"]*"' /tmp/snack-response.json | cut -d'"' -f4 | head -1)
-              echo "Snack ID found: $SNACK_ID"
-              echo "https://snack.expo.dev/@xlozingueztfx/$SNACK_ID" > /tmp/snack-url.txt
-            else
-              echo "WARNING: Unexpected API response format"
-              echo "Response does not contain expected 'url' or 'id' field"
-              echo "https://snack.expo.dev" > /tmp/snack-url.txt
-            fi
-          else
-            echo "ERROR: API call failed or no response file"
-            echo "Curl exit code: $?"
-            echo "https://snack.expo.dev" > /tmp/snack-url.txt
-          fi
+          # Run the publishing script
+          node publish-snack.js
           
           # Get the Snack URL and add to summary
           if [ -f /tmp/snack-url.txt ]; then
@@ -338,9 +372,9 @@ jobs:
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "Perfect for 8th grade students! 🎓" >> $GITHUB_STEP_SUMMARY
           else
-            echo "⚠️ Snack published but URL not captured"
-            echo "## 📱 Snack Published Successfully" >> $GITHUB_STEP_SUMMARY
-            echo "Your Snack has been published to Expo. Check your Expo account for the new Snack." >> $GITHUB_STEP_SUMMARY
+            echo "⚠️ Snack URL not captured"
+            echo "## 📱 Snack Publishing Attempted" >> $GITHUB_STEP_SUMMARY
+            echo "Check job logs for publishing status and Snack URL." >> $GITHUB_STEP_SUMMARY
           fi
         else
           echo "📝 Skipping Snack publishing - no EXPO_TOKEN provided"
