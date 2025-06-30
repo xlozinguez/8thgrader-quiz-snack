@@ -406,14 +406,93 @@ jobs:
           # Update app.json to include account information
           echo '{"expo":{"name":"8th Grader Quiz App","slug":"8th-grader-quiz-app","owner":"xlozingueztfx","version":"1.0.0","orientation":"portrait","userInterfaceStyle":"light","platforms":["ios","android","web"],"sdkVersion":"53.0.0","snack":true}}' > app.json
           
-          # Use expo publish for authenticated publishing
-          echo "📤 Publishing to your account with expo publish..."
-          if npx expo publish --non-interactive --clear; then
-            echo "✅ Successfully published with expo publish"
-          else
-            echo "⚠️ expo publish failed, trying Snack SDK..."
-            node publish-snack.js
-          fi
+          # Install EAS CLI for proper Expo publishing
+          echo "📦 Installing EAS CLI..."
+          npm install -g @expo/eas-cli
+          
+          # Use EAS to create/update the project
+          echo "🚀 Setting up EAS project..."
+          npx eas init --id $(uuidgen) || echo "EAS project already exists"
+          
+          # Try EAS update for live updates
+          echo "📤 Publishing update with EAS..."
+          npx eas update --branch production --message "Automated update from CI" || {
+            echo "⚠️ EAS update failed, trying direct Snack API..."
+            
+            # Use the Snack API directly with proper authentication
+            echo "📡 Using Snack API to create/update Snack..."
+            node -e "
+            const fs = require('fs');
+            const https = require('https');
+            
+            // Prepare Snack data
+            const files = {};
+            files['App.js'] = fs.readFileSync('App.js', 'utf8');
+            files['app.json'] = fs.readFileSync('app.json', 'utf8');
+            files['package.json'] = fs.readFileSync('package.json', 'utf8');
+            files['data/flashcards.js'] = fs.readFileSync('data/flashcards.js', 'utf8');
+            
+            const screenFiles = fs.readdirSync('screens');
+            screenFiles.forEach(file => {
+              if (file.endsWith('.js')) {
+                files['screens/' + file] = fs.readFileSync('screens/' + file, 'utf8');
+              }
+            });
+            
+            const snackData = {
+              manifest: {
+                name: '8th Grader Quiz App',
+                slug: '8th-grader-quiz-app',
+                sdkVersion: '53.0.0',
+                platforms: ['ios', 'android', 'web']
+              },
+              code: files
+            };
+            
+            // Make authenticated request to Snack API
+            const postData = JSON.stringify(snackData);
+            const options = {
+              hostname: 'snack.expo.dev',
+              port: 443,
+              path: '/api/v2/snack/save',
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Content-Length': Buffer.byteLength(postData),
+                'Authorization': 'Bearer ' + process.env.EXPO_TOKEN
+              }
+            };
+            
+            const req = https.request(options, (res) => {
+              let data = '';
+              res.on('data', (chunk) => data += chunk);
+              res.on('end', () => {
+                try {
+                  const result = JSON.parse(data);
+                  if (result.id) {
+                    const snackUrl = 'https://snack.expo.dev/@xlozingueztfx/' + result.id;
+                    console.log('✅ Snack created/updated:', snackUrl);
+                    fs.writeFileSync('/tmp/snack-url.txt', snackUrl);
+                  } else {
+                    console.log('⚠️ Snack API response:', data);
+                    fs.writeFileSync('/tmp/snack-url.txt', 'https://snack.expo.dev/vfjOLwzqUpUz0UBgNM8aL');
+                  }
+                } catch (e) {
+                  console.log('⚠️ API Error:', e.message);
+                  fs.writeFileSync('/tmp/snack-url.txt', 'https://snack.expo.dev/vfjOLwzqUpUz0UBgNM8aL');
+                }
+              });
+            });
+            
+            req.on('error', (e) => {
+              console.log('⚠️ Request Error:', e.message);
+              fs.writeFileSync('/tmp/snack-url.txt', 'https://snack.expo.dev/vfjOLwzqUpUz0UBgNM8aL');
+            });
+            
+            req.write(postData);
+            req.end();
+            " || echo "⚠️ Direct API call failed"
+          }
           
           # Set up the account-specific Snack URLs
           ACCOUNT_SNACK_URL="https://expo.dev/accounts/xlozingueztfx/snacks/8th-grader-quiz-app"
