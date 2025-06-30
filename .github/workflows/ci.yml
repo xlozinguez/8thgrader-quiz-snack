@@ -408,7 +408,7 @@ jobs:
           
           # Install EAS CLI for proper Expo publishing
           echo "📦 Installing EAS CLI..."
-          npm install -g @expo/eas-cli
+          npm install -g eas-cli
           
           # Use EAS to create/update the project
           echo "🚀 Setting up EAS project..."
