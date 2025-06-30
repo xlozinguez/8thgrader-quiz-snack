@@ -426,7 +426,10 @@ APP_EOF
           
           # Use expo publish to create the project under your account
           echo "📤 Publishing with expo publish..."
-          npx expo publish --non-interactive || {
+          npx expo publish --non-interactive
+          EXPO_RESULT=$?
+          
+          if [ $EXPO_RESULT -ne 0 ]; then
             echo "⚠️ expo publish failed, trying alternative approach..."
             
             # Alternative: Use expo-cli to create a proper project
@@ -450,23 +453,17 @@ APP_EOF
             
             # Final fallback: Create snack programmatically with correct API
             echo "📱 Creating Snack via web API..."
+            echo '{"manifest":{"name":"8th Grader Quiz App","slug":"8th-grader-quiz-app","owner":"xlozingueztfx","sdkVersion":"53.0.0","platforms":["ios","android","web"]}}' > /tmp/snack-payload.json
             curl -X POST "https://snack.expo.dev/api/v2/snack/save" \
               -H "Content-Type: application/json" \
               -H "Authorization: Bearer $EXPO_TOKEN" \
-              -d '{
-                "manifest": {
-                  "name": "8th Grader Quiz App",
-                  "slug": "8th-grader-quiz-app",
-                  "owner": "xlozingueztfx",
-                  "sdkVersion": "53.0.0",
-                  "platforms": ["ios", "android", "web"]
-                }
-              }' > /tmp/snack-response.json || echo "Curl API failed"
+              -d @/tmp/snack-payload.json > /tmp/snack-response.json || echo "Curl API failed"
               
             if [ -f /tmp/snack-response.json ]; then
+              echo "📱 Snack API Response:"
               cat /tmp/snack-response.json
             fi
-          }
+          fi
           
           # Set up the account-specific Snack URLs
           ACCOUNT_SNACK_URL="https://expo.dev/accounts/xlozingueztfx/snacks/8th-grader-quiz-app"
