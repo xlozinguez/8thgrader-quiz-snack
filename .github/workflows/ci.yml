@@ -403,95 +403,69 @@ jobs:
           # Create a project-specific slug for your account
           echo "📦 Setting up account-specific Snack..."
           
-          # Update app.json to include account information
-          echo '{"expo":{"name":"8th Grader Quiz App","slug":"8th-grader-quiz-app","owner":"xlozingueztfx","version":"1.0.0","orientation":"portrait","userInterfaceStyle":"light","platforms":["ios","android","web"],"sdkVersion":"53.0.0","snack":true}}' > app.json
+          # Try the simplest approach first: use expo publish with Snack format
+          echo "🚀 Publishing to Expo with account ownership..."
           
-          # Install EAS CLI for proper Expo publishing
-          echo "📦 Installing EAS CLI..."
-          npm install -g eas-cli
+          # Update app.json to include proper account ownership
+          cat > app.json << 'APP_EOF'
+{
+  "expo": {
+    "name": "8th Grader Quiz App",
+    "slug": "8th-grader-quiz-app",
+    "owner": "xlozingueztfx",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "platforms": ["ios", "android", "web"],
+    "sdkVersion": "53.0.0",
+    "snack": true,
+    "description": "Interactive quiz app for 8th grade students with 460+ flashcards"
+  }
+}
+APP_EOF
           
-          # Use EAS to create/update the project
-          echo "🚀 Setting up EAS project..."
-          npx eas init --id $(uuidgen) || echo "EAS project already exists"
-          
-          # Try EAS update for live updates
-          echo "📤 Publishing update with EAS..."
-          npx eas update --branch production --message "Automated update from CI" || {
-            echo "⚠️ EAS update failed, trying direct Snack API..."
+          # Use expo publish to create the project under your account
+          echo "📤 Publishing with expo publish..."
+          npx expo publish --non-interactive || {
+            echo "⚠️ expo publish failed, trying alternative approach..."
             
-            # Use the Snack API directly with proper authentication
-            echo "📡 Using Snack API to create/update Snack..."
-            node -e "
-            const fs = require('fs');
-            const https = require('https');
+            # Alternative: Use expo-cli to create a proper project
+            echo "📦 Installing expo-cli for legacy support..."
+            npm install -g expo-cli || true
             
-            // Prepare Snack data
-            const files = {};
-            files['App.js'] = fs.readFileSync('App.js', 'utf8');
-            files['app.json'] = fs.readFileSync('app.json', 'utf8');
-            files['package.json'] = fs.readFileSync('package.json', 'utf8');
-            files['data/flashcards.js'] = fs.readFileSync('data/flashcards.js', 'utf8');
+            # Create proper Expo project structure
+            echo "🎯 Creating account-owned Expo project..."
+            expo init 8th-grader-quiz-temp --template blank --npm --non-interactive || echo "Project may already exist"
             
-            const screenFiles = fs.readdirSync('screens');
-            screenFiles.forEach(file => {
-              if (file.endsWith('.js')) {
-                files['screens/' + file] = fs.readFileSync('screens/' + file, 'utf8');
-              }
-            });
+            # Copy our files to the temp project
+            if [ -d "8th-grader-quiz-temp" ]; then
+              cp -r data screens App.js app.json 8th-grader-quiz-temp/
+              cd 8th-grader-quiz-temp
+              
+              # Publish the project to your account
+              expo publish --non-interactive || echo "Publishing with expo-cli failed"
+              cd ..
+              rm -rf 8th-grader-quiz-temp
+            fi
             
-            const snackData = {
-              manifest: {
-                name: '8th Grader Quiz App',
-                slug: '8th-grader-quiz-app',
-                sdkVersion: '53.0.0',
-                platforms: ['ios', 'android', 'web']
-              },
-              code: files
-            };
-            
-            // Make authenticated request to Snack API
-            const postData = JSON.stringify(snackData);
-            const options = {
-              hostname: 'snack.expo.dev',
-              port: 443,
-              path: '/api/v2/snack/save',
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Content-Length': Buffer.byteLength(postData),
-                'Authorization': 'Bearer ' + process.env.EXPO_TOKEN
-              }
-            };
-            
-            const req = https.request(options, (res) => {
-              let data = '';
-              res.on('data', (chunk) => data += chunk);
-              res.on('end', () => {
-                try {
-                  const result = JSON.parse(data);
-                  if (result.id) {
-                    const snackUrl = 'https://snack.expo.dev/@xlozingueztfx/' + result.id;
-                    console.log('✅ Snack created/updated:', snackUrl);
-                    fs.writeFileSync('/tmp/snack-url.txt', snackUrl);
-                  } else {
-                    console.log('⚠️ Snack API response:', data);
-                    fs.writeFileSync('/tmp/snack-url.txt', 'https://snack.expo.dev/vfjOLwzqUpUz0UBgNM8aL');
-                  }
-                } catch (e) {
-                  console.log('⚠️ API Error:', e.message);
-                  fs.writeFileSync('/tmp/snack-url.txt', 'https://snack.expo.dev/vfjOLwzqUpUz0UBgNM8aL');
+            # Final fallback: Create snack programmatically with correct API
+            echo "📱 Creating Snack via web API..."
+            curl -X POST "https://snack.expo.dev/api/v2/snack/save" \
+              -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $EXPO_TOKEN" \
+              -d '{
+                "manifest": {
+                  "name": "8th Grader Quiz App",
+                  "slug": "8th-grader-quiz-app",
+                  "owner": "xlozingueztfx",
+                  "sdkVersion": "53.0.0",
+                  "platforms": ["ios", "android", "web"]
                 }
-              });
-            });
-            
-            req.on('error', (e) => {
-              console.log('⚠️ Request Error:', e.message);
-              fs.writeFileSync('/tmp/snack-url.txt', 'https://snack.expo.dev/vfjOLwzqUpUz0UBgNM8aL');
-            });
-            
-            req.write(postData);
-            req.end();
-            " || echo "⚠️ Direct API call failed"
+              }' > /tmp/snack-response.json || echo "Curl API failed"
+              
+            if [ -f /tmp/snack-response.json ]; then
+              cat /tmp/snack-response.json
+            fi
           }
           
           # Set up the account-specific Snack URLs
