@@ -60,4 +60,9 @@ function App() {
   );
 }
 
+// Export for both default and named exports (Snack compatibility)
 export default App;
+
+// Additional export pattern for Snack compatibility
+module.exports = App;
+module.exports.default = App;
