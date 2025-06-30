@@ -422,14 +422,12 @@ EOF
           
           # Use expo publish for authenticated publishing
           echo "📤 Publishing to your account with expo publish..."
-          npx expo publish --non-interactive --clear || {
-            echo "⚠️ expo publish failed, trying alternative method..."
-            # Try using snack upload command
-            npx snack-cli upload . --name "8th Grader Quiz App" --description "Interactive quiz app for 8th grade students" || {
-              echo "⚠️ snack-cli failed, using direct API..."
-              node publish-snack.js
-            }
-          }
+          if npx expo publish --non-interactive --clear; then
+            echo "✅ Successfully published with expo publish"
+          else
+            echo "⚠️ expo publish failed, trying Snack SDK..."
+            node publish-snack.js
+          fi
           
           # Set up the account-specific Snack URLs
           ACCOUNT_SNACK_URL="https://expo.dev/accounts/xlozingueztfx/snacks/8th-grader-quiz-app"
