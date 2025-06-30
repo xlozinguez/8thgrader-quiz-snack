@@ -407,22 +407,7 @@ jobs:
           echo "🚀 Publishing to Expo with account ownership..."
           
           # Update app.json to include proper account ownership
-          cat > app.json << 'APP_EOF'
-{
-  "expo": {
-    "name": "8th Grader Quiz App",
-    "slug": "8th-grader-quiz-app",
-    "owner": "xlozingueztfx",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "userInterfaceStyle": "light",
-    "platforms": ["ios", "android", "web"],
-    "sdkVersion": "53.0.0",
-    "snack": true,
-    "description": "Interactive quiz app for 8th grade students with 460+ flashcards"
-  }
-}
-APP_EOF
+          echo '{"expo":{"name":"8th Grader Quiz App","slug":"8th-grader-quiz-app","owner":"xlozingueztfx","version":"1.0.0","orientation":"portrait","userInterfaceStyle":"light","platforms":["ios","android","web"],"sdkVersion":"53.0.0","snack":true,"description":"Interactive quiz app for 8th grade students with 460+ flashcards"}}' > app.json
           
           # Use expo publish to create the project under your account
           echo "📤 Publishing with expo publish..."
