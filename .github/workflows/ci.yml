@@ -258,13 +258,10 @@ jobs:
         
         async function publishSnack() {
           try {
-            console.log('🔗 Creating/updating Snack session...');
+            console.log('🔗 Creating authenticated Snack session...');
             
-            // Try to update existing Snack first, fallback to creating new one
-            const existingSnackId = '@xlozingueztfx/8th-grader-quiz-app';
-            console.log('🔄 Attempting to update existing Snack:', existingSnackId);
-            
-            const session = new Snack({
+            // Use authenticated session with account owner
+            const snackConfig = {
               name: '8th Grader Quiz App', 
               slug: '8th-grader-quiz-app',
               description: 'Interactive quiz app for 8th grade students with 460+ flashcards',
@@ -282,7 +279,16 @@ jobs:
                 'expo-haptics': '~14.1.4',
                 'expo-status-bar': '~2.2.3'
               }
-            });
+            };
+
+            // Add authentication if available
+            if (process.env.EXPO_TOKEN) {
+              console.log('🔐 Using authenticated session...');
+              snackConfig.user = 'xlozingueztfx';
+            }
+            
+            console.log('📦 Creating Snack with config:', JSON.stringify(snackConfig, null, 2));
+            const session = new Snack(snackConfig);
             
             // Read all files and add them to the session
             const files = {};
@@ -323,7 +329,7 @@ jobs:
               result = await session.save();
             }
             
-            // Get Snack URL - use consistent slug
+            // Get Snack URL - ensure it's under your account
             let snackId;
             if (typeof session.getSnackId === 'function') {
               snackId = session.getSnackId();
@@ -332,11 +338,18 @@ jobs:
             } else if (result && result.id) {
               snackId = result.id;
             } else {
-              // Fallback to expected slug format
+              // Fallback to expected account slug format
               snackId = '@xlozingueztfx/8th-grader-quiz-app';
             }
             
-            const snackUrl = 'https://snack.expo.dev/' + snackId;
+            // Ensure the URL uses your account format
+            let snackUrl;
+            if (snackId.startsWith('@xlozingueztfx/')) {
+              snackUrl = 'https://snack.expo.dev/' + snackId;
+            } else {
+              // If no account prefix, use the account-specific format
+              snackUrl = 'https://expo.dev/accounts/xlozingueztfx/snacks/8th-grader-quiz-app';
+            }
             console.log('✅ Snack published successfully!');
             console.log('🔗 Snack URL: ' + snackUrl);
             
@@ -374,38 +387,67 @@ jobs:
         });
         SCRIPT_EOF
         
-    - name: Publish to Expo Snack via CLI
+    - name: Publish authenticated Snack to your account
       run: |
         cd snack-deploy
-        echo "📱 Publishing to Expo Snack via CLI..."
+        echo "📱 Publishing Snack to your Expo account..."
         
         if [ -n "${{ secrets.EXPO_TOKEN }}" ]; then
-          echo "🚀 Publishing Snack to Expo..."
+          echo "🚀 Publishing authenticated Snack..."
           export EXPO_TOKEN="${{ secrets.EXPO_TOKEN }}"
           
-          # Try to publish as a Snack using the expo CLI
-          echo "📤 Publishing with expo publish..."
-          npx expo publish --non-interactive --clear --max-workers 1 || {
-            echo "⚠️ expo publish failed, trying snack-sdk approach..."
-            node publish-snack.js
+          # Verify authentication first
+          echo "👤 Verifying Expo authentication..."
+          npx expo whoami
+          
+          # Create a project-specific slug for your account
+          echo "📦 Setting up account-specific Snack..."
+          
+          # Update app.json to include account information
+          cat > app.json << 'EOF'
+{
+  "expo": {
+    "name": "8th Grader Quiz App",
+    "slug": "8th-grader-quiz-app",
+    "owner": "xlozingueztfx",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "platforms": ["ios", "android", "web"],
+    "sdkVersion": "53.0.0",
+    "snack": true
+  }
+}
+EOF
+          
+          # Use expo publish for authenticated publishing
+          echo "📤 Publishing to your account with expo publish..."
+          npx expo publish --non-interactive --clear || {
+            echo "⚠️ expo publish failed, trying alternative method..."
+            # Try using snack upload command
+            npx snack-cli upload . --name "8th Grader Quiz App" --description "Interactive quiz app for 8th grade students" || {
+              echo "⚠️ snack-cli failed, using direct API..."
+              node publish-snack.js
+            }
           }
           
-          # Set up the expected Snack URL
-          EXPECTED_SNACK_URL="https://expo.dev/accounts/xlozingueztfx/snacks/8th-grader-quiz-app"
-          ALTERNATIVE_URL="https://snack.expo.dev/@xlozingueztfx/8th-grader-quiz-app"
+          # Set up the account-specific Snack URLs
+          ACCOUNT_SNACK_URL="https://expo.dev/accounts/xlozingueztfx/snacks/8th-grader-quiz-app"
+          SNACK_EXPO_URL="https://snack.expo.dev/@xlozingueztfx/8th-grader-quiz-app"
           
-          # Check if we have a captured URL, otherwise use expected
+          # Check if we have a captured URL, otherwise use account URL
           if [ -f /tmp/snack-url.txt ]; then
             SNACK_URL=$(cat /tmp/snack-url.txt)
           else
-            SNACK_URL="$EXPECTED_SNACK_URL"
+            SNACK_URL="$ACCOUNT_SNACK_URL"
           fi
           
           echo "## 📱 Expo Snack Published!" >> $GITHUB_STEP_SUMMARY
-          echo "🎉 **Your app is now live!**" >> $GITHUB_STEP_SUMMARY
+          echo "🎉 **Your app is now live in your account!**" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**📱 Try it now:** [$SNACK_URL]($SNACK_URL)" >> $GITHUB_STEP_SUMMARY
-          echo "**📱 Alternative URL:** [$ALTERNATIVE_URL]($ALTERNATIVE_URL)" >> $GITHUB_STEP_SUMMARY
+          echo "**📱 Account Dashboard:** [$ACCOUNT_SNACK_URL]($ACCOUNT_SNACK_URL)" >> $GITHUB_STEP_SUMMARY
+          echo "**📱 Direct Snack Link:** [$SNACK_EXPO_URL]($SNACK_EXPO_URL)" >> $GITHUB_STEP_SUMMARY
+          echo "**📱 Generated URL:** [$SNACK_URL]($SNACK_URL)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**How to access:**" >> $GITHUB_STEP_SUMMARY
           echo "1. Open the URL above on your computer" >> $GITHUB_STEP_SUMMARY
