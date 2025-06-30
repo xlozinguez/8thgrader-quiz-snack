@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, AppRegistry, Platform } from 'react-native';
 
 // Import screens (Snack compatibility)
 import HomeScreen from './screens/HomeScreen.js';
@@ -58,6 +58,17 @@ function App() {
       </Stack.Navigator>
     </NavigationContainer>
   );
+}
+
+// Web-specific app registration
+if (Platform.OS === 'web') {
+  AppRegistry.registerComponent('main', () => App);
+  
+  if (typeof document !== 'undefined') {
+    AppRegistry.runApplication('main', {
+      rootTag: document.getElementById('root'),
+    });
+  }
 }
 
 export default App;
