@@ -405,20 +405,20 @@ jobs:
           
           # Update app.json to include account information
           cat > app.json << 'EOF'
-          {
-            "expo": {
-              "name": "8th Grader Quiz App",
-              "slug": "8th-grader-quiz-app",
-              "owner": "xlozingueztfx",
-              "version": "1.0.0",
-              "orientation": "portrait",
-              "userInterfaceStyle": "light",
-              "platforms": ["ios", "android", "web"],
-              "sdkVersion": "53.0.0",
-              "snack": true
-            }
-          }
-          EOF
+{
+  "expo": {
+    "name": "8th Grader Quiz App",
+    "slug": "8th-grader-quiz-app",
+    "owner": "xlozingueztfx",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "platforms": ["ios", "android", "web"],
+    "sdkVersion": "53.0.0",
+    "snack": true
+  }
+}
+EOF
           
           # Use expo publish for authenticated publishing
           echo "📤 Publishing to your account with expo publish..."
