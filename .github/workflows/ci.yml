@@ -192,6 +192,7 @@ jobs:
         cp -r data snack-deploy/
         cp -r screens snack-deploy/
         cp App.js snack-deploy/
+        cp index.js snack-deploy/
         cp app.json snack-deploy/
         
         # Create Snack-specific package.json with correct dependencies
@@ -293,8 +294,9 @@ jobs:
             // Read all files and add them to the session
             const files = {};
             
-            // Add main App.js
+            // Add main App.js and entry point
             files['App.js'] = fs.readFileSync('App.js', 'utf8');
+            files['index.js'] = fs.readFileSync('index.js', 'utf8');
             files['app.json'] = fs.readFileSync('app.json', 'utf8');
             files['package.json'] = fs.readFileSync('package.json', 'utf8');
             
@@ -422,6 +424,7 @@ jobs:
           // Prepare the files object
           const files = {};
           files['App.js'] = fs.readFileSync('App.js', 'utf8');
+          files['index.js'] = fs.readFileSync('index.js', 'utf8');
           files['app.json'] = fs.readFileSync('app.json', 'utf8');
           files['package.json'] = fs.readFileSync('package.json', 'utf8');
           files['data/flashcards.js'] = fs.readFileSync('data/flashcards.js', 'utf8');
