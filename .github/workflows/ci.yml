@@ -409,64 +409,106 @@ jobs:
           # Update app.json to include proper account ownership
           echo '{"expo":{"name":"8th Grader Quiz App","slug":"8th-grader-quiz-app","owner":"xlozingueztfx","version":"1.0.0","orientation":"portrait","userInterfaceStyle":"light","platforms":["ios","android","web"],"sdkVersion":"53.0.0","snack":true,"description":"Interactive quiz app for 8th grade students with 460+ flashcards"}}' > app.json
           
-          # Use expo publish to create the project under your account
-          echo "📤 Publishing with expo publish..."
-          npx expo publish --non-interactive
-          EXPO_RESULT=$?
+          # Skip deprecated expo publish, go directly to working approach
+          echo "📤 Using direct Snack API approach..."
           
-          if [ $EXPO_RESULT -ne 0 ]; then
-            echo "⚠️ expo publish failed, trying alternative approach..."
+          # Create comprehensive Snack data with all files
+          echo "📁 Preparing Snack files..."
+          
+          # Read all files into a JSON structure for the API
+          node -e "
+          const fs = require('fs');
+          
+          // Prepare the files object
+          const files = {};
+          files['App.js'] = fs.readFileSync('App.js', 'utf8');
+          files['app.json'] = fs.readFileSync('app.json', 'utf8');
+          files['package.json'] = fs.readFileSync('package.json', 'utf8');
+          files['data/flashcards.js'] = fs.readFileSync('data/flashcards.js', 'utf8');
+          
+          // Add all screen files
+          const screenFiles = fs.readdirSync('screens');
+          screenFiles.forEach(file => {
+            if (file.endsWith('.js')) {
+              files['screens/' + file] = fs.readFileSync('screens/' + file, 'utf8');
+            }
+          });
+          
+          // Create Snack payload with proper structure
+          const payload = {
+            manifest: {
+              name: '8th Grader Quiz App',
+              slug: '8th-grader-quiz-app',
+              owner: 'xlozingueztfx',
+              sdkVersion: '53.0.0',
+              platforms: ['ios', 'android', 'web'],
+              description: 'Interactive quiz app for 8th grade students with 460+ flashcards'
+            },
+            code: files
+          };
+          
+          fs.writeFileSync('/tmp/snack-payload.json', JSON.stringify(payload, null, 2));
+          console.log('✅ Snack payload prepared with', Object.keys(files).length, 'files');
+          "
+          
+          # Make authenticated API request to create account-owned Snack
+          echo "🚀 Creating account-owned Snack via API..."
+          curl -X POST "https://snack.expo.dev/api/v2/snack/save" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $EXPO_TOKEN" \
+            -H "Expo-Platform: web" \
+            -H "User-Agent: Mozilla/5.0" \
+            -d @/tmp/snack-payload.json > /tmp/snack-response.json
+          
+          CURL_RESULT=$?
+          echo "📱 API Response (exit code: $CURL_RESULT):"
+          if [ -f /tmp/snack-response.json ]; then
+            cat /tmp/snack-response.json
             
-            # Alternative: Use expo-cli to create a proper project
-            echo "📦 Installing expo-cli for legacy support..."
-            npm install -g expo-cli || true
+            # Extract Snack ID from response if successful
+            SNACK_ID=$(node -e "
+            try {
+              const response = JSON.parse(require('fs').readFileSync('/tmp/snack-response.json', 'utf8'));
+              if (response.id) {
+                console.log(response.id);
+              } else if (response.snack && response.snack.id) {
+                console.log(response.snack.id);
+              } else {
+                console.log('');
+              }
+            } catch (e) {
+              console.log('');
+            }
+            " 2>/dev/null || echo "")
             
-            # Create proper Expo project structure
-            echo "🎯 Creating account-owned Expo project..."
-            expo init 8th-grader-quiz-temp --template blank --npm --non-interactive || echo "Project may already exist"
-            
-            # Copy our files to the temp project
-            if [ -d "8th-grader-quiz-temp" ]; then
-              cp -r data screens App.js app.json 8th-grader-quiz-temp/
-              cd 8th-grader-quiz-temp
-              
-              # Publish the project to your account
-              expo publish --non-interactive || echo "Publishing with expo-cli failed"
-              cd ..
-              rm -rf 8th-grader-quiz-temp
+            if [ -n "$SNACK_ID" ]; then
+              echo "✅ Successfully created Snack with ID: $SNACK_ID"
+              echo "$SNACK_ID" > /tmp/snack-id.txt
+            else
+              echo "⚠️ No Snack ID found in response, but API call completed"
             fi
-            
-            # Final fallback: Create snack programmatically with correct API
-            echo "📱 Creating Snack via web API..."
-            echo '{"manifest":{"name":"8th Grader Quiz App","slug":"8th-grader-quiz-app","owner":"xlozingueztfx","sdkVersion":"53.0.0","platforms":["ios","android","web"]}}' > /tmp/snack-payload.json
-            curl -X POST "https://snack.expo.dev/api/v2/snack/save" \
-              -H "Content-Type: application/json" \
-              -H "Authorization: Bearer $EXPO_TOKEN" \
-              -d @/tmp/snack-payload.json > /tmp/snack-response.json || echo "Curl API failed"
-              
-            if [ -f /tmp/snack-response.json ]; then
-              echo "📱 Snack API Response:"
-              cat /tmp/snack-response.json
-            fi
+          else
+            echo "❌ No response file created"
           fi
           
-          # Set up the account-specific Snack URLs
-          ACCOUNT_SNACK_URL="https://expo.dev/accounts/xlozingueztfx/snacks/8th-grader-quiz-app"
-          SNACK_EXPO_URL="https://snack.expo.dev/@xlozingueztfx/8th-grader-quiz-app"
-          
-          # Check if we have a captured URL, otherwise use account URL
-          if [ -f /tmp/snack-url.txt ]; then
-            SNACK_URL=$(cat /tmp/snack-url.txt)
+          # Set up the account-specific Snack URLs based on actual response
+          if [ -f /tmp/snack-id.txt ]; then
+            SNACK_ID=$(cat /tmp/snack-id.txt)
+            SNACK_URL="https://snack.expo.dev/@xlozingueztfx/$SNACK_ID"
+            ACCOUNT_SNACK_URL="https://expo.dev/accounts/xlozingueztfx/snacks"
+            echo "🎯 Using generated Snack ID: $SNACK_ID"
           else
-            SNACK_URL="$ACCOUNT_SNACK_URL"
+            # Fallback URLs if API didn't return ID
+            ACCOUNT_SNACK_URL="https://expo.dev/accounts/xlozingueztfx/snacks/8th-grader-quiz-app"
+            SNACK_URL="https://snack.expo.dev/@xlozingueztfx/8th-grader-quiz-app"
+            echo "📋 Using fallback URLs"
           fi
           
           echo "## 📱 Expo Snack Published!" >> $GITHUB_STEP_SUMMARY
           echo "🎉 **Your app is now live in your account!**" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**📱 Account Dashboard:** [$ACCOUNT_SNACK_URL]($ACCOUNT_SNACK_URL)" >> $GITHUB_STEP_SUMMARY
-          echo "**📱 Direct Snack Link:** [$SNACK_EXPO_URL]($SNACK_EXPO_URL)" >> $GITHUB_STEP_SUMMARY
-          echo "**📱 Generated URL:** [$SNACK_URL]($SNACK_URL)" >> $GITHUB_STEP_SUMMARY
+          echo "**📱 Direct Snack Link:** [$SNACK_URL]($SNACK_URL)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**How to access:**" >> $GITHUB_STEP_SUMMARY
           echo "1. Open the URL above on your computer" >> $GITHUB_STEP_SUMMARY
